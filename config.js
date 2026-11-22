@@ -1,5 +1,5 @@
 
 window.REPORTIFY_CONFIG = {
-  SUPABASE_URL: "TEMPEL_PROJECT_URL_DI_SINI",
-  SUPABASE_ANON_KEY: "TEMPEL_PUBLISHABLE_KEY_DI_SINI"
+  SUPABASE_URL: "https://awpetglszigzuvsjyhck.supabase.co/rest/v1/",
+  SUPABASE_ANON_KEY: "sb_publishable_XddJP3kUFjDcXBbt92S63A_GH2qTgmD"
 };
