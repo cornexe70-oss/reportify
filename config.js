@@ -1,6 +1,5 @@
-// Isi dari Supabase Dashboard > Project Settings > API.
-// URL dan anon key boleh digunakan di browser. JANGAN pernah masukkan service_role key di sini.
+
 window.REPORTIFY_CONFIG = {
-  SUPABASE_URL: "PASTE_PROJECT_URL_HERE",
-  SUPABASE_ANON_KEY: "PASTE_SUPABASE_ANON_KEY_HERE"
+  SUPABASE_URL: "TEMPEL_PROJECT_URL_DI_SINI",
+  SUPABASE_ANON_KEY: "TEMPEL_PUBLISHABLE_KEY_DI_SINI"
 };
