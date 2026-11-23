@@ -267,3 +267,84 @@
   }
   }
 
+/* =================================
+   REPORTIFY PERFORMANCE UPDATE
+   LIGHTWEIGHT MODE
+================================= */
+
+/* Matikan animasi scroll */
+html {
+  scroll-behavior: auto !important;
+  scroll-padding-top: 90px;
+}
+
+/* Hilangkan animasi yang berjalan terus */
+.price-card,
+.paper-front,
+.float-chip,
+.chip-bottom {
+  animation: none !important;
+}
+
+/* Hilangkan efek gerak saat hover */
+.price-card:hover,
+.service-card:hover,
+.price-card.selected,
+.price-card.is-selected,
+.price-card.active {
+  transform: none !important;
+}
+
+/* Glass effect lebih ringan */
+.price-card,
+#layanan-tambahan .service-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Transisi sederhana */
+.btn,
+.service-card,
+.price-card {
+  transition: box-shadow .15s ease,
+              border-color .15s ease,
+              background .15s ease !important;
+}
+
+/* Efek klik ringan */
+.btn:active {
+  transform: scale(.98);
+}
+
+/* Kurangi beban visual di HP */
+@media (max-width: 800px) {
+  .art-orbit,
+  .orbit-two {
+    display: none;
+  }
+
+  .paper {
+    box-shadow: 0 8px 20px #4a33731c;
+  }
+
+  .float-chip {
+    box-shadow: 0 5px 15px #39225b12;
+  }
+
+  .price-card,
+  .service-card {
+    box-shadow: 0 3px 12px #39225b0b;
+  }
+}
+
+/* Aksesibilitas */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
