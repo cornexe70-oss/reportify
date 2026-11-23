@@ -29,66 +29,78 @@
   orderModal.addEventListener("click",e=>{if(e.target===orderModal)hideModal(orderModal);});
   $("#closeLogin").addEventListener("click",()=>hideModal(loginModal));
 
-$("#orderForm").addEventListener("submit",async e=>{
+$("#orderForm").addEventListener("submit", async e => {
   e.preventDefault();
 
-  if(!supabase){
-    setMessage("#formMessage","Sistem belum dikonfigurasi.",true);
+  if (!supabase) {
+    setMessage("#formMessage", "Sistem belum dikonfigurasi.", true);
     return;
   }
 
-  const button=e.submitter;
-  button.disabled=true;
-  button.textContent="Mengirim...";
+  const button = e.submitter;
+  button.disabled = true;
+  button.textContent = "Mengirim...";
 
-  const d=Object.fromEntries(new FormData(e.currentTarget).entries());
+  const d = Object.fromEntries(
+    new FormData(e.currentTarget).entries()
+  );
 
-  const payload={
-    customer_name:d.name,
-    phone:d.phone,
-    school:d.school,
-    major:d.major||null,
-    package_name:d.plan,
-    notes:d.notes,
-    status:"Baru"
+  const payload = {
+    customer_name: d.name,
+    phone: "",
+    school: d.school,
+    major: d.major || null,
+    package_name: d.plan,
+    notes: d.notes,
+    status: "Baru"
   };
 
-  const {error}=await supabase.from("orders").insert(payload);
+  try {
+    const { error } = await supabase
+      .from("orders")
+      .insert(payload);
 
-  button.disabled=false;
-  button.innerHTML='Kirim permintaan <span>↗</span>';
+    if (error) throw error;
 
-  if(error){
-    setMessage("#formMessage","Gagal mengirim pesanan. Silakan coba lagi.",true);
+    const message = [
+      "Halo Admin REPORTIFY!",
+      "",
+      "Saya ingin memesan layanan REPORTIFY.",
+      "",
+      "Nama: " + d.name,
+      "Sekolah: " + d.school,
+      "Jurusan: " + (d.major || "-"),
+      "Layanan: " + d.plan,
+      "Detail kebutuhan: " + d.notes,
+      "",
+      "Mohon informasi selanjutnya. Terima kasih!"
+    ].join("\n");
+
+    const waURL =
+      "https://wa.me/6285846805011?text=" +
+      encodeURIComponent(message);
+
+    e.currentTarget.reset();
+    $("#planSelect").value = "Belum tahu";
+
+    hideModal(orderModal);
+    toast("Pesanan berhasil! Mengarahkan ke WhatsApp...");
+
+    window.location.assign(waURL);
+
+  } catch (error) {
     console.error(error);
-    return;
+    setMessage(
+      "#formMessage",
+      "Gagal mengirim pesanan. Silakan coba lagi.",
+      true
+    );
+  } finally {
+    button.disabled = false;
+    button.innerHTML = 'Kirim permintaan <span>↗</span>';
   }
-
-  const message=[
-    "Halo Admin REPORTIFY!",
-    "",
-    "Saya ingin memesan layanan REPORTIFY.",
-    "",
-    "Nama: "+d.name,
-    "WhatsApp: "+d.phone,
-    "Sekolah: "+d.school,
-    "Jurusan: "+(d.major||"-"),
-    "Paket: "+d.plan,
-    "Kebutuhan: "+d.notes,
-    "",
-    "Mohon informasi selanjutnya. Terima kasih!"
-  ].join("\n");
-
-  const waURL="https://wa.me/6285846805011?text="+encodeURIComponent(message);
-
-  e.currentTarget.reset();
-  $("#planSelect").value="Belum tahu";
-  hideModal(orderModal);
-  toast("Pesanan tersimpan! Membuka WhatsApp...");
-
-  window.location.href=waURL;
 });
-  
+                      
   async function openAdmin(){
     if(!supabase){showModal(loginModal);setMessage("#loginMessage","Hubungkan project Supabase terlebih dahulu dengan mengisi config.js.",true);return;}
     const {data:{session}}=await supabase.auth.getSession();
