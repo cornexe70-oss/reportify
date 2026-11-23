@@ -87,14 +87,15 @@ $("#orderForm").addEventListener("submit", async e => {
     toast("Pesanan berhasil! Mengarahkan ke WhatsApp...");
 
     window.location.assign(waURL);
+    
+} catch (error) {
+  console.error("REPORTIFY ERROR:", error);
 
-  } catch (error) {
-    console.error(error);
-    setMessage(
-      "#formMessage",
-      "Gagal mengirim pesanan. Silakan coba lagi.",
-      true
-    );
+  setMessage(
+    "#formMessage",
+    "ERROR: " + (error.message || JSON.stringify(error)),
+    true
+  );
   } finally {
     button.disabled = false;
     button.innerHTML = 'Kirim permintaan <span>↗</span>';
