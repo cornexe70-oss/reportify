@@ -238,28 +238,44 @@
     <div class="eyebrow">FORM KONSULTASI</div>
     <h2 id="orderTitle">Ceritakan laporanmu.</h2>
     <p class="modal-intro">Isi informasi berikut untuk mengirim permintaan kepada admin.</p>
-    <form id="orderForm">
-      <div class="form-grid">
-        <label>Nama lengkap<input name="name" required placeholder="Nama kamu"></label>
-        <label>Nomor WhatsApp<input name="phone" required inputmode="tel" placeholder="08xxxxxxxxxx"></label>
-        <label>Nama sekolah<input name="school" required placeholder="SMK ..."></label>
-        <label>Jurusan<input name="major" placeholder="Contoh: TKJ, AKL, DKV"></label>
-        <label class="full">Paket yang diminati
-          <select name="plan" id="planSelect">
-            <option value="Belum tahu">Belum tahu / konsultasi</option>
-            <option>Rapikan</option>
-            <option>Terstruktur</option>
-            <option>Poles Maksimal</option>
-          </select>
-        </label>
-        <label class="full">Kebutuhan / progres laporan
-          <textarea name="notes" rows="4" required placeholder="Ceritakan kebutuhanmu..."></textarea>
-        </label>
-      </div>
-      <label class="consent"><input type="checkbox" required> Saya memastikan informasi yang diberikan benar.</label>
-      <button class="btn btn-primary btn-full" type="submit">Kirim Permintaan ↗</button>
-      <div class="form-message" id="formMessage" role="status"></div>
-    </form>
+<form id="orderForm">
+  <div class="form-grid">
+    <label>Nama lengkap
+      <input name="name" required placeholder="Nama kamu">
+    </label>
+
+    <label>Nama sekolah
+      <input name="school" required placeholder="SMK ...">
+    </label>
+
+    <label>Jurusan
+      <input name="major" placeholder="Contoh: TKJ, AKL, DKV">
+    </label>
+
+    <label class="full">Paket yang diminati
+      <select name="plan" id="planSelect">
+        <option value="Belum tahu">Belum tahu / konsultasi</option>
+        <option>Rapikan</option>
+        <option>Terstruktur</option>
+        <option>Poles Maksimal</option>
+      </select>
+    </label>
+
+    <label class="full">Kebutuhan / progres laporan
+      <textarea name="notes" rows="4" required placeholder="Ceritakan kebutuhanmu..."></textarea>
+    </label>
+  </div>
+
+  <label class="consent">
+    <input type="checkbox" required>
+    Saya memastikan informasi yang diberikan benar.
+  </label>
+
+  <button class="btn btn-primary btn-full" type="submit">
+    Kirim Permintaan ↗
+  </button>
+  <div class="form-message" id="formMessage" role="status"></div>
+</form>  
   </section>
 </div>
 
