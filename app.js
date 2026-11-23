@@ -28,9 +28,12 @@
   $$("[data-close-order]").forEach(b=>b.addEventListener("click",()=>hideModal(orderModal)));
   orderModal.addEventListener("click",e=>{if(e.target===orderModal)hideModal(orderModal);});
   $("#closeLogin").addEventListener("click",()=>hideModal(loginModal));
-
+  
 $("#orderForm").addEventListener("submit", async e => {
   e.preventDefault();
+
+  // Simpan referensi form sebelum proses async
+  const form = e.currentTarget;
 
   if (!supabase) {
     setMessage("#formMessage", "Sistem belum dikonfigurasi.", true);
@@ -42,7 +45,7 @@ $("#orderForm").addEventListener("submit", async e => {
   button.textContent = "Mengirim...";
 
   const d = Object.fromEntries(
-    new FormData(e.currentTarget).entries()
+    new FormData(form).entries()
   );
 
   const payload = {
@@ -80,28 +83,31 @@ $("#orderForm").addEventListener("submit", async e => {
       "https://wa.me/6285846805011?text=" +
       encodeURIComponent(message);
 
-    e.currentTarget.reset();
+    // Reset menggunakan referensi form yang sudah disimpan
+    form.reset();
     $("#planSelect").value = "Belum tahu";
 
     hideModal(orderModal);
-    toast("Pesanan berhasil! Mengarahkan ke WhatsApp...");
 
-    window.location.assign(waURL);
-    
-} catch (error) {
-  console.error("REPORTIFY ERROR:", error);
+    toast("Pesanan berhasil! Membuka WhatsApp...");
 
-  setMessage(
-    "#formMessage",
-    "ERROR: " + (error.message || JSON.stringify(error)),
-    true
-  );
+    window.location.href = waURL;
+
+  } catch (error) {
+    console.error("REPORTIFY ERROR:", error);
+
+    setMessage(
+      "#formMessage",
+      "ERROR: " + (error.message || "Gagal mengirim pesanan."),
+      true
+    );
+
   } finally {
     button.disabled = false;
-    button.innerHTML = 'Kirim permintaan <span>↗</span>';
+    button.innerHTML = 'Kirim Permintaan <span>↗</span>';
   }
 });
-                      
+  
   async function openAdmin(){
     if(!supabase){showModal(loginModal);setMessage("#loginMessage","Hubungkan project Supabase terlebih dahulu dengan mengisi config.js.",true);return;}
     const {data:{session}}=await supabase.auth.getSession();
