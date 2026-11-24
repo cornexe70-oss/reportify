@@ -1,25 +1,20 @@
-
 (() => {
   "use strict";
 
   // =========================================
   // KONFIGURASI
   // =========================================
-
   const cfg = window.REPORTIFY_CONFIG || {};
-
-  const configured =
+  const configured = Boolean(
     cfg.SUPABASE_URL &&
     cfg.SUPABASE_ANON_KEY &&
-    !cfg.SUPABASE_URL.includes("PASTE_") &&
-    !cfg.SUPABASE_ANON_KEY.includes("PASTE_");
+    !String(cfg.SUPABASE_URL).includes("PASTE_") &&
+    !String(cfg.SUPABASE_ANON_KEY).includes("PASTE_")
+  );
 
   const supabaseClient =
     configured && window.supabase
-      ? window.supabase.createClient(
-          cfg.SUPABASE_URL,
-          cfg.SUPABASE_ANON_KEY
-        )
+      ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY)
       : null;
 
   const WHATSAPP_NUMBER = "6285846805011";
@@ -31,48 +26,37 @@
     ULTIMATE: "ULTIMATE — 30 halaman — Rp51.000"
   };
 
-  const $ = (selector, root = document) =>
-    root.querySelector(selector);
-
-  const $$ = (selector, root = document) =>
-    [...root.querySelectorAll(selector)];
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
   let activeOrderId = null;
   let currentAdmin = null;
   let cachedOrders = [];
 
   // =========================================
-  // NOTIFIKASI
+  // UTILITAS & NOTIFIKASI
   // =========================================
-
   function toast(message, type = "success") {
     const element = $("#toast");
 
     if (!element) {
-      alert(message);
+      window.alert(message);
       return;
     }
 
     element.textContent = message;
     element.className = `toast show ${type}`;
 
-    clearTimeout(toast.timer);
+    window.clearTimeout(toast.timer);
 
-    toast.timer = setTimeout(() => {
+    toast.timer = window.setTimeout(() => {
       element.classList.remove("show");
     }, 3200);
   }
 
-  // =========================================
-  // UTILITAS
-  // =========================================
-
-  function formatRupiah(value) {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0
-    }).format(Number(value) || 0);
+  function setText(selector, value) {
+    const element = $(selector);
+    if (element) element.textContent = String(value ?? "");
   }
 
   function formatDate(value) {
@@ -84,7 +68,7 @@
 
     return date.toLocaleString("id-ID", {
       day: "2-digit",
-      month: "long",
+      month: "short",
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit"
@@ -101,78 +85,91 @@
     })[char]);
   }
 
-  function setText(selector, value) {
-    const element = $(selector);
-    if (element) element.textContent = value;
-  }
-
-  // =========================================
-  // MENU NAVIGASI
-  // =========================================
-
-  const menuToggle = $("#menuToggle");
-  const navMenu = $("#navMenu");
-
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener("click", () => {
-      navMenu.classList.toggle("active");
-      menuToggle.classList.toggle("active");
-    });
-
-    $$("#navMenu a").forEach(link => {
-      link.addEventListener("click", () => {
-        navMenu.classList.remove("active");
-        menuToggle.classList.remove("active");
-      });
-    });
-  }
-
-  // =========================================
-  // MODAL
-  // =========================================
-
-  function openModal(selector) {
-    const modal = $(selector);
+  function setModalState(modal, open) {
     if (!modal) return;
 
-    modal.classList.add("show");
-    document.body.classList.add("modal-open");
+    modal.classList.toggle("show", open);
+    modal.setAttribute("aria-hidden", String(!open));
+
+    const anyModalOpen = Boolean(
+      $(".modal-backdrop.show, .admin-backdrop.show")
+    );
+
+    document.body.classList.toggle(
+      "modal-open",
+      open || anyModalOpen
+    );
+  }
+
+  function openModal(selector) {
+    setModalState($(selector), true);
   }
 
   function closeModal(selector) {
-    const modal = $(selector);
-    if (!modal) return;
-
-    modal.classList.remove("show");
-
-    if (!$(".modal-backdrop.show")) {
-      document.body.classList.remove("modal-open");
-    }
+    setModalState($(selector), false);
   }
 
-  // Tombol buka formulir
+  // =========================================
+  // NAVIGASI MOBILE
+  // =========================================
+  const menuToggle = $("#menuToggle");
+  const navMenu = $("#mainNav");
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navMenu.classList.toggle("active");
+
+      menuToggle.classList.toggle("active", isOpen);
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Tutup menu" : "Buka menu"
+      );
+    });
+
+    $$("a", navMenu).forEach(link => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        menuToggle.classList.remove("active");
+
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Buka menu");
+      });
+    });
+
+    document.addEventListener("click", event => {
+      if (
+        !navMenu.contains(event.target) &&
+        !menuToggle.contains(event.target)
+      ) {
+        navMenu.classList.remove("active");
+        menuToggle.classList.remove("active");
+
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Buka menu");
+      }
+    });
+  }
+
+  // =========================================
+  // MODAL PEMESANAN
+  // =========================================
   $$("[data-open-order], .open-order, #openOrder").forEach(button => {
     button.addEventListener("click", () => {
       openModal("#orderModal");
     });
   });
 
-  // Tombol tutup formulir
   $$("[data-close-order], #closeOrder").forEach(button => {
     button.addEventListener("click", () => {
       closeModal("#orderModal");
     });
   });
 
-  // Klik area luar modal
   $$(".modal-backdrop").forEach(modal => {
     modal.addEventListener("click", event => {
       if (event.target === modal) {
-        modal.classList.remove("show");
-
-        if (!$(".modal-backdrop.show")) {
-          document.body.classList.remove("modal-open");
-        }
+        closeModal(`#${modal.id}`);
       }
     });
   });
@@ -180,14 +177,13 @@
   // =========================================
   // PILIH PAKET
   // =========================================
-
   $$("[data-plan]").forEach(button => {
     button.addEventListener("click", () => {
-      const planKey = button.dataset.plan;
-      const planSelect = $("#plan");
+      const plan = PACKAGES[button.dataset.plan];
+      const planSelect = $("#plan") || $('[name="plan"]');
 
-      if (planSelect && PACKAGES[planKey]) {
-        planSelect.value = PACKAGES[planKey];
+      if (plan && planSelect) {
+        planSelect.value = plan;
       }
 
       openModal("#orderModal");
@@ -197,7 +193,6 @@
   // =========================================
   // TOMBOL WHATSAPP ADMIN
   // =========================================
-
   $$("[data-whatsapp], .ask-admin, #askAdmin").forEach(button => {
     button.addEventListener("click", () => {
       const message =
@@ -206,14 +201,13 @@
       const url =
         `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-      window.open(url, "_blank");
+      window.open(url, "_blank", "noopener,noreferrer");
     });
   });
 
   // =========================================
   // FORM PEMESANAN
   // =========================================
-
   const orderForm = $("#orderForm");
 
   if (orderForm) {
@@ -225,20 +219,25 @@
           "Koneksi database belum tersedia. Periksa config.js terlebih dahulu.",
           "error"
         );
+
+        setText(
+          "#formMessage",
+          "Koneksi database belum tersedia. Silakan hubungi admin."
+        );
+
         return;
       }
 
       const submitButton = orderForm.querySelector(
-        'button[type="submit"], input[type="submit"]'
+        'button[type="submit"]'
       );
 
-      const originalText = submitButton
-        ? submitButton.textContent
-        : "";
+      const originalText =
+        submitButton?.textContent || "Kirim Permintaan ↗";
 
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = "Mengirim pesanan...";
+        submitButton.textContent = "Mengirim permintaan...";
       }
 
       try {
@@ -252,18 +251,22 @@
 
         const selectedServices = formData
           .getAll("services")
-          .map(item => String(item).trim())
+          .map(value => String(value).trim())
           .filter(Boolean);
 
-        if (!name || !school || !major) {
-          toast("Lengkapi nama, sekolah, dan jurusan terlebih dahulu.", "error");
+        if (!name || !school || !major || !notes) {
+          toast(
+            "Lengkapi nama, sekolah, jurusan, dan kebutuhan laporan.",
+            "error"
+          );
+
           return;
         }
 
         const packageAndServices = [
           plan || "Tidak memilih paket utama",
           selectedServices.length
-            ? "Layanan tambahan: " + selectedServices.join(", ")
+            ? `Layanan tambahan: ${selectedServices.join(", ")}`
             : "Layanan tambahan: Tidak ada"
         ].join("\n");
 
@@ -281,11 +284,7 @@
           .from("orders")
           .insert([payload]);
 
-        if (error) {
-          console.error("Kesalahan pemesanan:", error);
-          toast("Pesanan gagal dikirim. Silakan coba lagi.", "error");
-          return;
-        }
+        if (error) throw error;
 
         const whatsappMessage = [
           "Halo Admin REPORTIFY!",
@@ -309,20 +308,33 @@
 
         orderForm.reset();
 
+        setText("#formMessage", "");
+
         closeModal("#orderModal");
 
-        toast("Pesanan berhasil dikirim!");
+        toast(
+          "Permintaan berhasil dikirim. Mengalihkan ke WhatsApp..."
+        );
 
         const whatsappURL =
           `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
 
-        setTimeout(() => {
+        window.setTimeout(() => {
           window.location.href = whatsappURL;
         }, 900);
 
       } catch (error) {
-        console.error(error);
-        toast("Terjadi kesalahan. Silakan coba kembali.", "error");
+        console.error("Kesalahan pemesanan:", error);
+
+        toast(
+          "Pesanan gagal dikirim. Silakan coba lagi.",
+          "error"
+        );
+
+        setText(
+          "#formMessage",
+          "Pesanan gagal dikirim. Silakan coba kembali."
+        );
 
       } finally {
         if (submitButton) {
@@ -336,30 +348,30 @@
   // =========================================
   // LOGIN ADMIN
   // =========================================
-
   const adminButton = $("#adminLogin");
   const loginForm = $("#loginForm");
 
   if (adminButton) {
-    adminButton.addEventListener("click", () => {
+    adminButton.addEventListener("click", event => {
+      event.preventDefault();
       openModal("#loginModal");
     });
   }
 
-  const closeLogin = $("#closeLogin");
-
-  if (closeLogin) {
-    closeLogin.addEventListener("click", () => {
-      closeModal("#loginModal");
-    });
-  }
+  $("#closeLogin")?.addEventListener("click", () => {
+    closeModal("#loginModal");
+  });
 
   if (loginForm) {
     loginForm.addEventListener("submit", async event => {
       event.preventDefault();
 
       if (!supabaseClient) {
-        setText("#loginMessage", "Koneksi database belum tersedia.");
+        setText(
+          "#loginMessage",
+          "Koneksi database belum tersedia. Periksa config.js."
+        );
+
         return;
       }
 
@@ -372,13 +384,16 @@
       );
 
       const message = $("#loginMessage");
+
       const submitButton = loginForm.querySelector(
         'button[type="submit"]'
       );
 
-      if (message) message.textContent = "Memeriksa akun...";
+      setText("#loginMessage", "Memeriksa akun...");
 
-      if (submitButton) submitButton.disabled = true;
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
 
       try {
         const { data, error } =
@@ -400,7 +415,10 @@
 
         if (adminError || !adminData) {
           await supabaseClient.auth.signOut();
-          throw new Error("Akun ini tidak memiliki akses admin.");
+
+          throw new Error(
+            "Akun ini tidak memiliki akses admin."
+          );
         }
 
         currentAdmin = user;
@@ -408,23 +426,28 @@
         closeModal("#loginModal");
         loginForm.reset();
 
-        if (message) message.textContent = "";
+        if (message) {
+          message.textContent = "";
+        }
 
         await loadOrders();
+
         openAdminPanel();
 
         toast("Login admin berhasil!");
 
       } catch (error) {
-        console.error(error);
+        console.error("Login admin gagal:", error);
 
-        if (message) {
-          message.textContent =
-            error.message || "Login gagal. Periksa email dan password.";
-        }
+        setText(
+          "#loginMessage",
+          error.message || "Login gagal. Periksa email dan password."
+        );
 
       } finally {
-        if (submitButton) submitButton.disabled = false;
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
       }
     });
   }
@@ -432,83 +455,33 @@
   // =========================================
   // PANEL ADMIN
   // =========================================
-
   function openAdminPanel() {
     const panel = $("#adminPanel");
+
     if (!panel) return;
 
     panel.classList.add("show");
+    panel.setAttribute("aria-hidden", "false");
+
     document.body.classList.add("modal-open");
   }
 
   function closeAdminPanel() {
     const panel = $("#adminPanel");
+
     if (!panel) return;
 
     panel.classList.remove("show");
+    panel.setAttribute("aria-hidden", "true");
+
     document.body.classList.remove("modal-open");
   }
 
-  const closeAdminButton = $("#closeAdmin");
-
-  if (closeAdminButton) {
-    closeAdminButton.addEventListener("click", closeAdminPanel);
-  }
-
-  // =========================================
-  // MEMUAT DATA PESANAN
-  // =========================================
-
-  async function loadOrders() {
-    if (!supabaseClient || !currentAdmin) return;
-
-    const tbody = $("#ordersBody");
-    const emptyState = $("#emptyOrders");
-
-    if (tbody) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6">Memuat data pesanan...</td>
-        </tr>
-      `;
-    }
-
-    try {
-      const { data, error } = await supabaseClient
-        .from("orders")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-
-      cachedOrders = data || [];
-
-      renderOrders();
-      updateDashboardStats();
-
-      if (emptyState) {
-        emptyState.hidden = cachedOrders.length > 0;
-      }
-
-    } catch (error) {
-      console.error("Gagal memuat pesanan:", error);
-
-      if (tbody) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6">Gagal memuat data pesanan.</td>
-          </tr>
-        `;
-      }
-
-      toast("Gagal mengambil data pesanan.", "error");
-    }
-  }
+  $("#closeAdmin")?.addEventListener("click", closeAdminPanel);
 
   // =========================================
   // STATISTIK DASHBOARD
   // =========================================
-
   function updateDashboardStats() {
     const total = cachedOrders.length;
 
@@ -536,9 +509,52 @@
   }
 
   // =========================================
-  // TAMPILKAN DATA PESANAN
+  // MEMUAT DATA PESANAN
   // =========================================
+  async function loadOrders() {
+    if (!supabaseClient || !currentAdmin) return;
 
+    const tbody = $("#ordersBody");
+
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">Memuat data pesanan...</td>
+        </tr>
+      `;
+    }
+
+    try {
+      const { data, error } = await supabaseClient
+        .from("orders")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      cachedOrders = data || [];
+
+      renderOrders();
+      updateDashboardStats();
+
+    } catch (error) {
+      console.error("Gagal memuat pesanan:", error);
+
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6">Gagal memuat data pesanan.</td>
+          </tr>
+        `;
+      }
+
+      toast("Gagal mengambil data pesanan.", "error");
+    }
+  }
+
+  // =========================================
+  // MENAMPILKAN DATA PESANAN
+  // =========================================
   function renderOrders() {
     const tbody = $("#ordersBody");
     const emptyState = $("#emptyOrders");
@@ -547,9 +563,10 @@
 
     const searchValue = String(
       $("#searchOrders")?.value || ""
-    ).toLowerCase();
+    ).toLowerCase().trim();
 
-    const filterValue = $("#statusFilter")?.value || "Semua";
+    const filterValue =
+      $("#statusFilter")?.value || "Semua";
 
     const filteredOrders = cachedOrders.filter(order => {
       const searchableText = [
@@ -559,13 +576,14 @@
         order.package_name
       ].join(" ").toLowerCase();
 
-      const matchesSearch = searchableText.includes(searchValue);
-
-      const matchesStatus =
-        filterValue === "Semua" ||
-        order.status === filterValue;
-
-      return matchesSearch && matchesStatus;
+      return (
+        searchableText.includes(searchValue) &&
+        (
+          filterValue === "Semua" ||
+          !filterValue ||
+          order.status === filterValue
+        )
+      );
     });
 
     if (emptyState) {
@@ -578,31 +596,38 @@
           <td colspan="6">Belum ada pesanan yang sesuai.</td>
         </tr>
       `;
+
       return;
     }
 
-    tbody.innerHTML = filteredOrders.map(order => `
-      <tr>
-        <td>${escapeHTML(order.name)}</td>
-        <td>${escapeHTML(order.school || "-")}</td>
-        <td>${escapeHTML(order.package_name || "-")}</td>
-        <td>
-          <span class="status-badge">
-            ${escapeHTML(order.status || "Baru")}
-          </span>
-        </td>
-        <td>${escapeHTML(formatDate(order.created_at))}</td>
-        <td>
-          <button
-            type="button"
-            class="detail-button"
-            data-detail-id="${escapeHTML(order.id)}"
-          >
-            Detail
-          </button>
-        </td>
-      </tr>
-    `).join("");
+    tbody.innerHTML = filteredOrders.map(order => {
+      const statusClass = String(order.status || "Baru")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-");
+
+      return `
+        <tr>
+          <td>${escapeHTML(order.name || "-")}</td>
+          <td>${escapeHTML(order.school || "-")}</td>
+          <td>${escapeHTML(order.package_name || "-").replace(/\n/g, "<br>")}</td>
+          <td>
+            <span class="status-badge status-${statusClass}">
+              ${escapeHTML(order.status || "Baru")}
+            </span>
+          </td>
+          <td>${escapeHTML(formatDate(order.created_at))}</td>
+          <td>
+            <button
+              type="button"
+              class="detail-button"
+              data-detail-id="${escapeHTML(order.id)}"
+            >
+              Detail
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
 
     $$("[data-detail-id]", tbody).forEach(button => {
       button.addEventListener("click", () => {
@@ -611,22 +636,12 @@
     });
   }
 
-  // Pencarian dan filter
-  const searchOrders = $("#searchOrders");
-  const statusFilter = $("#statusFilter");
-
-  if (searchOrders) {
-    searchOrders.addEventListener("input", renderOrders);
-  }
-
-  if (statusFilter) {
-    statusFilter.addEventListener("change", renderOrders);
-  }
+  $("#searchOrders")?.addEventListener("input", renderOrders);
+  $("#statusFilter")?.addEventListener("change", renderOrders);
 
   // =========================================
   // DETAIL PESANAN
   // =========================================
-
   function showOrderDetail(id) {
     const order = cachedOrders.find(
       item => String(item.id) === String(id)
@@ -639,7 +654,10 @@
 
     activeOrderId = order.id;
 
-    setText("#detailName", order.name || "Detail Pesanan");
+    setText(
+      "#detailName",
+      order.name || "Detail Pesanan"
+    );
 
     const content = $("#detailContent");
 
@@ -691,19 +709,14 @@
     openModal("#detailModal");
   }
 
-  const closeDetail = $("#closeDetail");
-
-  if (closeDetail) {
-    closeDetail.addEventListener("click", () => {
-      closeModal("#detailModal");
-      activeOrderId = null;
-    });
-  }
+  $("#closeDetail")?.addEventListener("click", () => {
+    closeModal("#detailModal");
+    activeOrderId = null;
+  });
 
   // =========================================
   // UPDATE STATUS PESANAN
   // =========================================
-
   const saveStatusButton = $("#saveStatus");
 
   if (saveStatusButton) {
@@ -713,8 +726,7 @@
         return;
       }
 
-      const statusSelect = $("#detailStatus");
-      const newStatus = statusSelect?.value;
+      const newStatus = $("#detailStatus")?.value;
 
       if (!newStatus) {
         toast("Pilih status pesanan terlebih dahulu.", "error");
@@ -739,8 +751,12 @@
         toast("Status pesanan berhasil diperbarui!");
 
       } catch (error) {
-        console.error(error);
-        toast("Gagal memperbarui status pesanan.", "error");
+        console.error("Gagal memperbarui status:", error);
+
+        toast(
+          "Gagal memperbarui status pesanan.",
+          "error"
+        );
 
       } finally {
         saveStatusButton.disabled = false;
@@ -751,7 +767,6 @@
   // =========================================
   // EXPORT DATA CSV
   // =========================================
-
   const exportButton = $("#exportCsv");
 
   if (exportButton) {
@@ -775,62 +790,4 @@
         order.name,
         order.school,
         order.major,
-        order.package_name,
-        order.notes,
-        order.status,
-        formatDate(order.created_at)
-      ]);
-
-      const csvContent = [
-        headers,
-        ...rows
-      ].map(row =>
-        row.map(value =>
-          `"${String(value ?? "").replace(/"/g, '""')}"`
-        ).join(",")
-      ).join("\n");
-
-      const blob = new Blob(
-        ["\uFEFF" + csvContent],
-        { type: "text/csv;charset=utf-8;" }
-      );
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = "data-pesanan-reportify.csv";
-
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      URL.revokeObjectURL(url);
-
-      toast("Data pesanan berhasil diekspor!");
-    });
-  }
-
-  // =========================================
-  // CEK STATUS LOGIN ADMIN
-  // =========================================
-
-  if (supabaseClient) {
-    supabaseClient.auth.onAuthStateChange(
-      (_event, session) => {
-        if (!session) {
-          currentAdmin = null;
-          cachedOrders = [];
-          closeAdminPanel();
-        }
-      }
-    );
-  }
-
-  // =========================================
-  // SELESAI
-  // =========================================
-
-  console.log("REPORTIFY siap digunakan.");
-
-})();
+        order
