@@ -1276,4 +1276,575 @@ td small {
   color: #a46b13;
 }
 
-.status-sel
+
+esai {
+  background: #e5f7eb;
+  color: #218653;
+}
+
+.status-baru {
+  background: #e9e2ff;
+  color: #6842c2;
+}
+
+.status-dibatalkan {
+  background: #fde8e8;
+  color: #b33b45;
+}
+
+/* DETAIL PESANAN */
+.detail-content {
+  display: grid;
+  gap: 0;
+  margin: 18px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.detail-item {
+  display: grid;
+  grid-template-columns: minmax(125px, .7fr) minmax(0, 1.3fr);
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+}
+
+.detail-item:last-child {
+  border-bottom: 0;
+}
+
+.detail-item strong {
+  color: var(--muted);
+}
+
+.detail-item span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.detail-status-label {
+  display: grid;
+  gap: 7px;
+  margin: 15px 0;
+  color: #4c4657;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.detail-status-label select {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 1px solid #ded8e8;
+  border-radius: 9px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+}
+
+.empty-state {
+  padding: 20px;
+  border: 1px dashed #d9d0e8;
+  border-radius: 12px;
+  background: var(--lav2);
+  color: var(--muted);
+  text-align: center;
+  font-size: 11px;
+}
+
+.empty-state[hidden] {
+  display: none !important;
+}
+
+.admin-disclaimer {
+  margin: 17px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+/* NOTIFIKASI */
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 200;
+  max-width: min(390px, calc(100% - 32px));
+  padding: 13px 17px;
+  border-radius: 12px;
+  background: #24183e;
+  color: white;
+  box-shadow: 0 12px 35px rgba(25,17,40,.2);
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: .2s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.toast.error {
+  background: #a83242;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .site-header {
+    padding-inline: 18px;
+  }
+
+  .site-header nav {
+    gap: 14px;
+  }
+
+  .pricing-grid {
+    gap: 12px;
+  }
+
+  .price-card {
+    padding: 20px 15px;
+  }
+
+  .price {
+    font-size: 22px;
+  }
+
+  .admin-main {
+    padding: 24px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 760px) {
+  .section-wrap {
+    width: calc(100% - 32px);
+  }
+
+  .section-pad,
+  .workflow {
+    padding-block: 46px;
+  }
+
+  /* HEADER DAN HAMBURGER */
+  .site-header {
+    min-height: 64px;
+    padding: 10px 16px;
+    gap: 12px;
+  }
+
+  .brand {
+    font-size: 15px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    padding: 0;
+    font-size: 21px;
+  }
+
+  .site-header nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 12px;
+    left: 12px;
+    display: none;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 16px 35px rgba(35,24,60,.13);
+  }
+
+  .site-header nav.active {
+    display: flex;
+  }
+
+  .site-header nav a {
+    padding: 11px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+
+  .site-header nav a:hover {
+    background: var(--lav2);
+  }
+
+  .site-header nav .btn {
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  /* HERO */
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 25px;
+    min-height: auto;
+    padding-block: 42px 55px;
+  }
+
+  .hero h1 {
+    font-size: clamp(34px, 9vw, 46px);
+    letter-spacing: -1.3px;
+  }
+
+  .hero-lead {
+    font-size: 13px;
+  }
+
+  .hero-actions {
+    gap: 12px;
+  }
+
+  .hero-art {
+    width: 100%;
+    padding: 3px 0 10px;
+  }
+
+  /* ILUSTRASI KERTAS TETAP ADA */
+  .hero-simple-card {
+    width: min(100%, 390px);
+    min-height: 285px;
+    padding: 27px;
+  }
+
+  .hero-bottom {
+    bottom: 8px;
+    font-size: 8px;
+  }
+
+  /* TRUST STRIP */
+  .trust-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px 12px;
+    padding: 19px 16px;
+  }
+
+  .trust-strip b {
+    font-size: 17px;
+  }
+
+  .trust-strip span {
+    font-size: 10px;
+  }
+
+  /* JUDUL BAGIAN */
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 21px;
+  }
+
+  .section-heading h2,
+  .faq-layout h2 {
+    font-size: clamp(27px, 7vw, 35px);
+  }
+
+  .section-heading > p {
+    max-width: 100%;
+    font-size: 11px;
+  }
+
+  /* PAKET HARGA */
+  .pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .price-card {
+    padding: 17px 13px;
+    border-radius: 15px;
+  }
+
+  .price-card h3 {
+    font-size: 17px;
+  }
+
+  .price {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+
+  .price-card ul {
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .price-card .btn {
+    width: 100%;
+    padding-inline: 8px;
+    font-size: 10px;
+  }
+
+  /* LAYANAN DAN LANGKAH */
+  .service-grid,
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .service-card {
+    padding: 17px 14px;
+    border-radius: 15px;
+  }
+
+  .service-card h3,
+  .step h3 {
+    font-size: 13px;
+  }
+
+  .service-card p,
+  .step p {
+    font-size: 10px;
+  }
+
+  .step {
+    padding: 16px 14px;
+    border-radius: 15px;
+  }
+
+  /* FAQ */
+  .faq-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .faq-list summary {
+    font-size: 12px;
+  }
+
+  /* CTA DAN FOOTER */
+  .cta-section {
+    padding-block: 38px;
+  }
+
+  .cta-box {
+    padding: 37px 18px;
+    border-radius: 19px;
+  }
+
+  .footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .footer-links {
+    gap: 13px;
+  }
+
+  .footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  /* FORMULIR */
+  .modal-backdrop {
+    align-items: flex-end;
+    padding: 8px;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 94vh;
+    padding: 22px 17px;
+    border-radius: 18px;
+  }
+
+  .modal h2 {
+    padding-right: 28px;
+    font-size: 22px;
+  }
+
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-grid .full {
+    grid-column: auto;
+  }
+
+  .service-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* DASHBOARD ADMIN */
+  .admin-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-sidebar {
+    position: relative;
+    height: auto;
+    padding: 14px 16px;
+  }
+
+  .admin-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 15px;
+  }
+
+  .nav-caption {
+    width: 100%;
+    margin-bottom: 2px;
+  }
+
+  .admin-nav a {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .admin-side-bottom {
+    display: none;
+  }
+
+  .admin-main {
+    padding: 19px 14px 28px;
+  }
+
+  .admin-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-top h1 {
+    font-size: 23px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .stat-card {
+    padding: 13px;
+  }
+
+  .stat-card b {
+    font-size: 22px;
+  }
+
+  .table-card {
+    padding: 13px;
+  }
+
+  .table-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .table-controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .table-controls select {
+    width: 100%;
+  }
+
+  .table-scroll {
+    border: 1px solid var(--line);
+    border-radius: 9px;
+  }
+
+  table {
+    min-width: 650px;
+  }
+
+  .detail-item {
+    grid-template-columns: minmax(95px, .7fr) minmax(0, 1.3fr);
+    gap: 9px;
+    padding: 10px;
+    font-size: 10px;
+  }
+
+  .toast {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    max-width: none;
+    text-align: center;
+  }
+}
+
+/* HP KECIL */
+@media (max-width: 380px) {
+  .section-wrap {
+    width: calc(100% - 26px);
+  }
+
+  .brand {
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .hero h1 {
+    font-size: 33px;
+  }
+
+  .hero-simple-card {
+    min-height: 265px;
+    padding: 22px;
+  }
+
+  .pricing-grid,
+  .service-grid,
+  .steps {
+    gap: 9px;
+  }
+
+  .price-card {
+    padding: 14px 11px;
+  }
+
+  .price-card h3 {
+    font-size: 15px;
+  }
+
+  .price {
+    font-size: 18px;
+  }
+
+  .price-card ul {
+    font-size: 9px;
+  }
+
+  .service-card,
+  .step {
+    padding: 14px 11px;
+  }
+}
+
+/* AKSESIBILITAS */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+   }
+   
