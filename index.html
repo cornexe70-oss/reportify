@@ -6,11 +6,13 @@
   <meta name="theme-color" content="#6d45d8">
   <meta name="description" content="REPORTIFY AI - Pendampingan laporan PKL yang rapi, terstruktur, dan profesional.">
   <title>REPORTIFY AI — Laporan Rapi, Urusan Jadi Mudah.</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
 <div class="announcement">✦ REPORTIFY AI — Partner laporan PKL kamu</div>
@@ -20,7 +22,9 @@
     <span class="brand-mark">R</span>
     <span>REPORTIFY<span class="brand-dot">.</span><small>AI REPORT ASSISTANT</small></span>
   </a>
-  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+
   <nav id="mainNav">
     <a href="#layanan-tambahan">Layanan</a>
     <a href="#paket">Paket</a>
@@ -36,38 +40,40 @@
 <section class="hero section-wrap" id="home">
   <div class="hero-copy">
     <div class="eyebrow">✦ PARTNER LAPORAN PKL KAMU</div>
+
     <h1>Laporan PKL lebih<br><span>rapi dan profesional.</span></h1>
+
     <p class="hero-lead">
       Bingung menyusun laporan PKL? REPORTIFY membantu
       merapikan kerangka, bahasa, format, dan penyajian
       berdasarkan pengalaman nyata kamu.
     </p>
+
     <div class="hero-actions">
       <button class="btn btn-primary" data-open-order>Mulai Konsultasi ↗</button>
-      <a href="#layanan" class="text-link">Lihat layanan ↓</a>
+      <a href="#layanan-tambahan" class="text-link">Lihat layanan ↓</a>
     </div>
+
     <div class="hero-proof">
       <div class="avatar-stack"><i>R</i><i>✦</i><i>✓</i></div>
-      <span><b>Lebih mudah dan terarah.</b><small>Pendampingan dari awal sampai rapi.</small></span>
+      <span>
+        <b>Lebih mudah dan terarah.</b>
+        <small>Pendampingan dari awal sampai rapi.</small>
+      </span>
     </div>
   </div>
 
-  <div class="hero-art">
-    <div class="art-glow"></div>
-    <div class="float-chip chip-top">✦ Rapi & Terstruktur</div>
-    <div class="paper paper-back"></div>
-    <div class="paper paper-front">
-      <div class="paper-top"><span class="mini-logo">R.</span><span class="paper-tag">LAPORAN PKL</span></div>
-      <div class="paper-title">LAPORAN<br>PRAKTIK KERJA<br>LAPANGAN</div>
-      <div class="paper-line long"></div>
-      <div class="paper-line"></div>
-      <div class="paper-block"><i></i><i></i><i></i></div>
-      <div class="paper-sign"><span></span><span></span></div>
-      <div class="paper-check">✓</div>
+  <!-- Hero dibuat ringan tanpa animasi kertas -->
+  <div class="hero-art hero-art-simple">
+    <div class="hero-simple-card">
+      <div class="hero-simple-icon">R.</div>
+      <div class="eyebrow">REPORTIFY AI</div>
+      <h2>Laporan PKL<br>lebih terstruktur.</h2>
+      <div class="hero-simple-line"></div>
+      <div class="hero-simple-line short"></div>
+      <div class="hero-simple-check">✓</div>
+      <p>Jujur dalam isi. Rapi dalam penyajian.</p>
     </div>
-    <div class="float-chip chip-bottom">✎ Detail diperhatikan</div>
-    <div class="art-orbit orbit-one"></div>
-    <div class="art-orbit orbit-two"></div>
   </div>
 
   <div class="hero-bottom">
@@ -82,7 +88,7 @@
   <div><b>03</b><span>Format profesional</span></div>
   <div><b>04</b><span>Konsultasi mudah</span></div>
 </section>
-  
+
 <section class="pricing-section" id="paket">
   <div class="section-wrap section-pad">
     <div class="section-heading">
@@ -285,12 +291,14 @@
       <span class="brand-mark">R</span>
       <span>REPORTIFY<span class="brand-dot">.</span><small>AI REPORT ASSISTANT</small></span>
     </a>
+
     <div class="footer-links">
-      <a href="#layanan">Layanan</a>
+      <a href="#layanan-tambahan">Layanan</a>
       <a href="#paket">Paket</a>
       <a href="#faq">FAQ</a>
       <button id="adminLink">Login Admin ↗</button>
     </div>
+
     <div class="footer-bottom">
       <span>© <span id="year"></span> REPORTIFY AI.</span>
       <span>Jujur dalam isi. Rapi dalam penyajian.</span>
@@ -298,9 +306,10 @@
   </div>
 </footer>
 
+<!-- MODAL PESANAN -->
 <div class="modal-backdrop" id="orderModal" aria-hidden="true">
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
-    <button class="modal-close" data-close-order>×</button>
+    <button class="modal-close" type="button" data-close-order>×</button>
     <div class="eyebrow">FORM KONSULTASI</div>
     <h2 id="orderTitle">Ceritakan laporanmu.</h2>
     <p class="modal-intro">Isi informasi berikut. Setelah mengirim permintaan, kamu akan diarahkan ke WhatsApp REPORTIFY.</p>
@@ -349,6 +358,7 @@
         <label class="full">Kebutuhan / progres laporan
           <textarea name="notes" rows="4" required placeholder="Ceritakan kebutuhanmu, kondisi laporan, atau hal yang ingin ditanyakan..."></textarea>
         </label>
+
       </div>
 
       <label class="consent">
@@ -359,11 +369,37 @@
       <button class="btn btn-primary btn-full" type="submit">
         Kirim Permintaan ↗
       </button>
+
       <div class="form-message" id="formMessage" role="status"></div>
     </form>
   </section>
 </div>
 
+<!-- LOGIN ADMIN -->
+<div class="modal-backdrop" id="loginModal" aria-hidden="true">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <button class="modal-close" id="closeLogin" type="button">×</button>
+    <div class="eyebrow">AREA ADMIN</div>
+    <h2 id="loginTitle">Masuk ke dashboard.</h2>
+    <p class="modal-intro">Gunakan email dan password admin.</p>
+
+    <form id="loginForm">
+      <div class="form-grid">
+        <label class="full">Email admin
+          <input name="email" type="email" required autocomplete="username" placeholder="admin@email.com">
+        </label>
+        <label class="full">Password
+          <input name="password" type="password" required autocomplete="current-password" placeholder="Password admin">
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-full" type="submit">Login ↗</button>
+      <div class="form-message" id="loginMessage" role="status"></div>
+    </form>
+  </section>
+</div>
+
+<!-- DASHBOARD ADMIN -->
 <div class="admin-backdrop" id="adminPanel" aria-hidden="true">
   <section class="admin-shell">
     <aside class="admin-sidebar">
@@ -371,11 +407,13 @@
         <span class="brand-mark">R</span>
         <span>REPORTIFY<small>ADMIN WORKSPACE</small></span>
       </a>
+
       <div class="admin-nav">
         <span class="nav-caption">WORKSPACE</span>
         <a class="active" href="#adminOverview">▦ &nbsp; Overview</a>
         <a href="#ordersTable">▤ &nbsp; Pesanan</a>
       </div>
+
       <div class="admin-side-bottom">
         <span class="admin-avatar">A</span>
         <span><b>Admin REPORTIFY</b><small>Supabase Workspace</small></span>
@@ -385,7 +423,7 @@
     <div class="admin-main">
       <div class="admin-top">
         <div>
-          <button class="back-site" id="closeAdmin">← Kembali ke website</button>
+          <button class="back-site" id="closeAdmin" type="button">← Kembali ke website</button>
           <h1>Dashboard</h1>
           <p>Kelola pesanan REPORTIFY AI.</p>
         </div>
@@ -406,7 +444,7 @@
               <h2>Daftar pesanan</h2>
               <p>Data pesanan dari database Supabase.</p>
             </div>
-            <button class="btn btn-outline btn-small" id="exportCsv">↓ Export CSV</button>
+            <button class="btn btn-outline btn-small" id="exportCsv" type="button">↓ Export CSV</button>
           </div>
 
           <div class="table-controls">
@@ -423,11 +461,18 @@
           <div class="table-scroll">
             <table>
               <thead>
-                <tr><th>Pelanggan</th><th>Paket / Layanan</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
+                <tr>
+                  <th>Pelanggan</th>
+                  <th>Paket / Layanan</th>
+                  <th>Tanggal</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
               </thead>
               <tbody id="ordersBody"></tbody>
             </table>
           </div>
+
           <div class="empty-state" id="emptyOrders">Belum ada pesanan.</div>
         </div>
 
@@ -437,19 +482,37 @@
   </section>
 </div>
 
-<div class="modal-backdrop" id="loginModal" aria-hidden="true">
-  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-    <button class="modal-close" id="closeLogin">×</button>
-    <div class="eyebrow">AREA ADMIN</div>
-    <h2 id="loginTitle">Masuk ke dashboard.</h2>
-    <p class="modal-intro">Gunakan email dan password admin.</p>
-    <form id="loginForm">
-      <div class="form-grid">
-        <label class="full">Email admin
-          <input name="email" type="email" required autocomplete="username" placeholder="admin@email.com">
-        </label>
-        <label class="full">Password
-          <input name="password" type="password" required autocomplete="current-password" placeholder="Password admin">
-        </label>
-      </div>
-      <button class="btn btn-prim
+<!-- DETAIL PESANAN -->
+<div class="modal-backdrop" id="detailModal" aria-hidden="true">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="detailName">
+    <button class="modal-close" id="closeDetail" type="button">×</button>
+    <div class="eyebrow">DETAIL PESANAN</div>
+    <h2 id="detailName">Pesanan</h2>
+
+    <div class="detail-content" id="detailContent"></div>
+
+    <label class="detail-status-label">Status pesanan
+      <select id="detailStatus">
+        <option>Baru</option>
+        <option>Diproses</option>
+        <option>Selesai</option>
+        <option>Dibatalkan</option>
+      </select>
+    </label>
+
+    <button class="btn btn-primary btn-full" id="saveStatus" type="button">
+      Simpan Status
+    </button>
+  </section>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<!-- SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+
+</body>
+          </html>
+  
