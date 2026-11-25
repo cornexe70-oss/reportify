@@ -621,7 +621,7 @@
       return `
         <tr>
           <td>
-            <strong>${escapeHTML(order.name || "-")}</strong>
+            <strong>${escapeHTML(order.customer_name || "-")}</strong>
             <small>${escapeHTML(order.school || "-")}</small>
           </td>
 
