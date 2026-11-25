@@ -684,7 +684,7 @@
       content.innerHTML = `
         <div class="detail-item">
           <strong>Nama</strong>
-          <span>${escapeHTML(order.name || "-")}</span>
+          <span>${escapeHTML(order.customer_name || "-")}</span>
         </div>
 
         <div class="detail-item">
