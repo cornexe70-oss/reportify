@@ -676,7 +676,7 @@
 
     activeOrderId = order.id;
 
-    setText("#detailName", order.name || "Detail Pesanan");
+    setText("#detailName", order.customer_name || "Detail Pesanan");
 
     const content = $("#detailContent");
 
