@@ -310,7 +310,7 @@
         ].join("\n");
 
         const payload = {
-          name,
+          customer_name: name,
           phone: "",
           school,
           major,
