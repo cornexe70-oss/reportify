@@ -1848,3 +1848,220 @@ esai {
   }
    }
    
+/* =====================================
+   REPORTIFY — VISUAL POLISH
+===================================== */
+
+/* KARTU PAKET */
+.price-card {
+  position: relative;
+  padding-top: 48px;
+  border-radius: 19px;
+  box-shadow: 0 5px 18px rgba(40, 25, 75, .035);
+}
+
+.price-card::before {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.price-card:nth-child(1)::before {
+  content: "MULAI DI SINI";
+  background: #f0eaff;
+  color: #7048d8;
+}
+
+.price-card:nth-child(2)::before {
+  content: "LEBIH LENGKAP";
+  background: #e9f1ff;
+  color: #4168b2;
+}
+
+.price-card:nth-child(3)::before {
+  content: "★ PALING FAVORIT";
+  background: #7048d8;
+  color: white;
+}
+
+.price-card:nth-child(4)::before {
+  content: "PALING HEMAT";
+  background: #e3f6eb;
+  color: #218653;
+}
+
+/* PAKET FAVORIT */
+.price-card:nth-child(3) {
+  border: 2px solid #a88ae9;
+  box-shadow: 0 12px 30px rgba(112, 72, 216, .12);
+  transform: translateY(-4px);
+}
+
+.price-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 32px rgba(55, 35, 90, .10);
+}
+
+/* TEKS PAKET */
+.plan-label {
+  display: inline-block;
+  margin-bottom: 3px;
+  font-size: 9px;
+  letter-spacing: 1.1px;
+}
+
+.price-card h3 {
+  font-size: 20px;
+  letter-spacing: -.4px;
+}
+
+.price {
+  margin-top: 15px;
+  font-size: 27px;
+  letter-spacing: -1px;
+}
+
+.price-card ul {
+  line-height: 1.7;
+}
+
+.price-card .btn {
+  min-height: 43px;
+  border-radius: 11px;
+}
+
+/* =====================================
+   IKON KERTAS REPORTIFY
+===================================== */
+
+.hero-simple-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 65px;
+  height: 65px;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 19px;
+  background: linear-gradient(145deg, #8965ed, #5834bd);
+  box-shadow: 0 10px 24px rgba(112,72,216,.25);
+  font-size: 0;
+}
+
+/* Bentuk lembar dokumen */
+.hero-simple-icon::before {
+  content: "";
+  position: absolute;
+  width: 27px;
+  height: 35px;
+  border: 2px solid white;
+  border-radius: 4px;
+  background: linear-gradient(
+    135deg,
+    white 0 79%,
+    #d8caff 80% 100%
+  );
+  clip-path: polygon(
+    0 0,
+    72% 0,
+    100% 25%,
+    100% 100%,
+    0 100%
+  );
+  box-shadow: 0 3px 8px rgba(0,0,0,.12);
+}
+
+/* Garis tulisan pada dokumen */
+.hero-simple-icon::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 12px;
+  margin-top: 7px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #8965ed 0,
+    #8965ed 2px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+/* KARTU ILUSTRASI */
+.hero-simple-card {
+  border: 1px solid #e3d8fa;
+  background:
+    radial-gradient(circle at 90% 10%, #eee5ff 0, transparent 38%),
+    linear-gradient(145deg, #fff, #f7f3ff);
+  box-shadow: 0 22px 55px rgba(55,35,90,.10);
+}
+
+.hero-simple-check {
+  box-shadow: 0 5px 15px rgba(33,134,83,.13);
+}
+
+/* =====================================
+   SENTUHAN AKHIR
+===================================== */
+
+.service-card,
+.step,
+.price-card {
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
+}
+
+.service-card:hover,
+.step:hover {
+  border-color: #d4c3f5;
+  box-shadow: 0 12px 28px rgba(55,35,90,.07);
+}
+
+/* MOBILE */
+@media (max-width: 760px) {
+  .price-card {
+    padding: 46px 13px 17px;
+  }
+
+  .price-card:nth-child(3) {
+    transform: none;
+  }
+
+  .price-card:nth-child(3):hover {
+    transform: translateY(-3px);
+  }
+
+  .price-card::before {
+    top: 12px;
+    right: 10px;
+    font-size: 7px;
+    padding: 4px 7px;
+  }
+
+  .price-card h3 {
+    font-size: 16px;
+  }
+
+  .price {
+    font-size: clamp(18px, 5vw, 23px);
+  }
+
+  .hero-simple-icon {
+    width: 59px;
+    height: 59px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-card,
+  .service-card,
+  .step {
+    transition: none;
+  }
+}
