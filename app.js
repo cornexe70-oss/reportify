@@ -1,10 +1,13 @@
+
 (() => {
   "use strict";
 
   // =========================================
   // KONFIGURASI
   // =========================================
+
   const cfg = window.REPORTIFY_CONFIG || {};
+
   const configured = Boolean(
     cfg.SUPABASE_URL &&
     cfg.SUPABASE_ANON_KEY &&
@@ -14,7 +17,10 @@
 
   const supabaseClient =
     configured && window.supabase
-      ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY)
+      ? window.supabase.createClient(
+          cfg.SUPABASE_URL,
+          cfg.SUPABASE_ANON_KEY
+        )
       : null;
 
   const WHATSAPP_NUMBER = "6285846805011";
@@ -22,41 +28,37 @@
   const PACKAGES = {
     STARTER: "STARTER — 15 halaman — Rp30.000",
     BASIC: "BASIC — 20 halaman — Rp38.000",
-    PRO: "PRO — 25 halaman — Rp45.000",
-    ULTIMATE: "ULTIMATE — 30 halaman — Rp51.000"
+    FAVORIT: "FAVORIT — 25 halaman — Rp45.000",
+    PRO: "PRO — 30 halaman — Rp51.000"
   };
 
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const $ = (selector, root = document) =>
+    root.querySelector(selector);
+
+  const $$ = (selector, root = document) =>
+    [...root.querySelectorAll(selector)];
 
   let activeOrderId = null;
   let currentAdmin = null;
   let cachedOrders = [];
 
   // =========================================
-  // UTILITAS & NOTIFIKASI
+  // UTILITAS
   // =========================================
-  function toast(message, type = "success") {
-    const element = $("#toast");
-
-    if (!element) {
-      window.alert(message);
-      return;
-    }
-
-    element.textContent = message;
-    element.className = `toast show ${type}`;
-
-    window.clearTimeout(toast.timer);
-
-    toast.timer = window.setTimeout(() => {
-      element.classList.remove("show");
-    }, 3200);
-  }
 
   function setText(selector, value) {
     const element = $(selector);
     if (element) element.textContent = String(value ?? "");
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[char]);
   }
 
   function formatDate(value) {
@@ -75,43 +77,62 @@
     });
   }
 
-  function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    })[char]);
+  function toast(message, type = "success") {
+    const element = $("#toast");
+
+    if (!element) {
+      window.alert(message);
+      return;
+    }
+
+    element.textContent = message;
+    element.className = `toast show ${type}`;
+
+    window.clearTimeout(toast.timer);
+
+    toast.timer = window.setTimeout(() => {
+      element.classList.remove("show");
+    }, 3200);
   }
 
-  function setModalState(modal, open) {
-    if (!modal) return;
-
-    modal.classList.toggle("show", open);
-    modal.setAttribute("aria-hidden", String(!open));
-
-    const anyModalOpen = Boolean(
+  function updateBodyLock() {
+    const isOpen = Boolean(
       $(".modal-backdrop.show, .admin-backdrop.show")
     );
 
-    document.body.classList.toggle(
-      "modal-open",
-      open || anyModalOpen
-    );
+    document.body.classList.toggle("modal-open", isOpen);
   }
 
   function openModal(selector) {
-    setModalState($(selector), true);
+    const modal = $(selector);
+    if (!modal) return;
+
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+
+    updateBodyLock();
   }
 
   function closeModal(selector) {
-    setModalState($(selector), false);
+    const modal = $(selector);
+    if (!modal) return;
+
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+
+    updateBodyLock();
   }
+
+  // =========================================
+  // TAHUN FOOTER
+  // =========================================
+
+  setText("#year", new Date().getFullYear());
 
   // =========================================
   // NAVIGASI MOBILE
   // =========================================
+
   const menuToggle = $("#menuToggle");
   const navMenu = $("#mainNav");
 
@@ -131,7 +152,6 @@
       link.addEventListener("click", () => {
         navMenu.classList.remove("active");
         menuToggle.classList.remove("active");
-
         menuToggle.setAttribute("aria-expanded", "false");
         menuToggle.setAttribute("aria-label", "Buka menu");
       });
@@ -144,7 +164,6 @@
       ) {
         navMenu.classList.remove("active");
         menuToggle.classList.remove("active");
-
         menuToggle.setAttribute("aria-expanded", "false");
         menuToggle.setAttribute("aria-label", "Buka menu");
       }
@@ -152,8 +171,9 @@
   }
 
   // =========================================
-  // MODAL PEMESANAN
+  // MODAL KONSULTASI
   // =========================================
+
   $$("[data-open-order], .open-order, #openOrder").forEach(button => {
     button.addEventListener("click", () => {
       openModal("#orderModal");
@@ -166,21 +186,42 @@
     });
   });
 
+  // =========================================
+  // TUTUP MODAL
+  // =========================================
+
   $$(".modal-backdrop").forEach(modal => {
     modal.addEventListener("click", event => {
       if (event.target === modal) {
         closeModal(`#${modal.id}`);
+
+        if (modal.id === "detailModal") {
+          activeOrderId = null;
+        }
       }
     });
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key !== "Escape") return;
+
+    $$(".modal-backdrop.show").forEach(modal => {
+      closeModal(`#${modal.id}`);
+    });
+
+    if ($("#detailModal")?.classList.contains("show")) {
+      activeOrderId = null;
+    }
   });
 
   // =========================================
   // PILIH PAKET
   // =========================================
+
   $$("[data-plan]").forEach(button => {
     button.addEventListener("click", () => {
       const plan = PACKAGES[button.dataset.plan];
-      const planSelect = $("#plan") || $('[name="plan"]');
+      const planSelect = $('[name="plan"]');
 
       if (plan && planSelect) {
         planSelect.value = plan;
@@ -191,8 +232,9 @@
   });
 
   // =========================================
-  // TOMBOL WHATSAPP ADMIN
+  // WHATSAPP
   // =========================================
+
   $$("[data-whatsapp], .ask-admin, #askAdmin").forEach(button => {
     button.addEventListener("click", () => {
       const message =
@@ -208,6 +250,7 @@
   // =========================================
   // FORM PEMESANAN
   // =========================================
+
   const orderForm = $("#orderForm");
 
   if (orderForm) {
@@ -215,14 +258,11 @@
       event.preventDefault();
 
       if (!supabaseClient) {
-        toast(
-          "Koneksi database belum tersedia. Periksa config.js terlebih dahulu.",
-          "error"
-        );
+        toast("Koneksi database belum tersedia.", "error");
 
         setText(
           "#formMessage",
-          "Koneksi database belum tersedia. Silakan hubungi admin."
+          "Periksa konfigurasi Supabase terlebih dahulu."
         );
 
         return;
@@ -254,12 +294,11 @@
           .map(value => String(value).trim())
           .filter(Boolean);
 
-        if (!name || !school || !major || !notes) {
+        if (!name || !school || !notes) {
           toast(
-            "Lengkapi nama, sekolah, jurusan, dan kebutuhan laporan.",
+            "Lengkapi nama, sekolah, dan kebutuhan laporan.",
             "error"
           );
-
           return;
         }
 
@@ -289,11 +328,11 @@
         const whatsappMessage = [
           "Halo Admin REPORTIFY!",
           "",
-          "Saya sudah mengirim formulir pemesanan melalui website.",
+          "Saya sudah mengirim formulir melalui website.",
           "",
           `Nama: ${name}`,
           `Sekolah: ${school}`,
-          `Jurusan: ${major}`,
+          `Jurusan: ${major || "-"}`,
           `Paket: ${plan || "Belum memilih paket"}`,
           `Layanan tambahan: ${
             selectedServices.length
@@ -301,20 +340,17 @@
               : "Tidak ada"
           }`,
           "",
-          `Kebutuhan: ${notes || "-"}`,
+          `Kebutuhan: ${notes}`,
           "",
           "Mohon informasi langkah selanjutnya. Terima kasih!"
         ].join("\n");
 
         orderForm.reset();
-
         setText("#formMessage", "");
 
         closeModal("#orderModal");
 
-        toast(
-          "Permintaan berhasil dikirim. Mengalihkan ke WhatsApp..."
-        );
+        toast("Pesanan berhasil dikirim. Membuka WhatsApp...");
 
         const whatsappURL =
           `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -326,14 +362,11 @@
       } catch (error) {
         console.error("Kesalahan pemesanan:", error);
 
-        toast(
-          "Pesanan gagal dikirim. Silakan coba lagi.",
-          "error"
-        );
+        toast("Pesanan gagal dikirim. Coba lagi.", "error");
 
         setText(
           "#formMessage",
-          "Pesanan gagal dikirim. Silakan coba kembali."
+          error.message || "Terjadi kesalahan saat mengirim pesanan."
         );
 
       } finally {
@@ -348,15 +381,15 @@
   // =========================================
   // LOGIN ADMIN
   // =========================================
-  const adminButton = $("#adminLogin");
+
   const loginForm = $("#loginForm");
 
-  if (adminButton) {
-    adminButton.addEventListener("click", event => {
-      event.preventDefault();
-      openModal("#loginModal");
-    });
-  }
+  const adminButton = $("#adminLink") || $("#adminLogin");
+
+  adminButton?.addEventListener("click", event => {
+    event.preventDefault();
+    openModal("#loginModal");
+  });
 
   $("#closeLogin")?.addEventListener("click", () => {
     closeModal("#loginModal");
@@ -371,7 +404,6 @@
           "#loginMessage",
           "Koneksi database belum tersedia. Periksa config.js."
         );
-
         return;
       }
 
@@ -383,17 +415,13 @@
         loginForm.querySelector('[name="password"]')?.value || ""
       );
 
-      const message = $("#loginMessage");
-
       const submitButton = loginForm.querySelector(
         'button[type="submit"]'
       );
 
       setText("#loginMessage", "Memeriksa akun...");
 
-      if (submitButton) {
-        submitButton.disabled = true;
-      }
+      if (submitButton) submitButton.disabled = true;
 
       try {
         const { data, error } =
@@ -415,20 +443,15 @@
 
         if (adminError || !adminData) {
           await supabaseClient.auth.signOut();
-
-          throw new Error(
-            "Akun ini tidak memiliki akses admin."
-          );
+          throw new Error("Akun ini tidak memiliki akses admin.");
         }
 
         currentAdmin = user;
 
-        closeModal("#loginModal");
         loginForm.reset();
+        setText("#loginMessage", "");
 
-        if (message) {
-          message.textContent = "";
-        }
+        closeModal("#loginModal");
 
         await loadOrders();
 
@@ -445,9 +468,7 @@
         );
 
       } finally {
-        if (submitButton) {
-          submitButton.disabled = false;
-        }
+        if (submitButton) submitButton.disabled = false;
       }
     });
   }
@@ -455,26 +476,25 @@
   // =========================================
   // PANEL ADMIN
   // =========================================
+
   function openAdminPanel() {
     const panel = $("#adminPanel");
-
     if (!panel) return;
 
     panel.classList.add("show");
     panel.setAttribute("aria-hidden", "false");
 
-    document.body.classList.add("modal-open");
+    updateBodyLock();
   }
 
   function closeAdminPanel() {
     const panel = $("#adminPanel");
-
     if (!panel) return;
 
     panel.classList.remove("show");
     panel.setAttribute("aria-hidden", "true");
 
-    document.body.classList.remove("modal-open");
+    updateBodyLock();
   }
 
   $("#closeAdmin")?.addEventListener("click", closeAdminPanel);
@@ -482,6 +502,7 @@
   // =========================================
   // STATISTIK DASHBOARD
   // =========================================
+
   function updateDashboardStats() {
     const total = cachedOrders.length;
 
@@ -497,20 +518,16 @@
       order => order.status === "Selesai"
     ).length;
 
-    setText("#totalOrders", total);
-    setText("#newOrders", baru);
-    setText("#processingOrders", proses);
-    setText("#completedOrders", selesai);
-
     setText("#statTotal", total);
     setText("#statNew", baru);
-    setText("#statProcess", proses);
+    setText("#statProgress", proses);
     setText("#statDone", selesai);
   }
 
   // =========================================
-  // MEMUAT DATA PESANAN
+  // MEMUAT PESANAN
   // =========================================
+
   async function loadOrders() {
     if (!supabaseClient || !currentAdmin) return;
 
@@ -519,7 +536,7 @@
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="6">Memuat data pesanan...</td>
+          <td colspan="5">Memuat data pesanan...</td>
         </tr>
       `;
     }
@@ -543,7 +560,7 @@
       if (tbody) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="6">Gagal memuat data pesanan.</td>
+            <td colspan="5">Gagal memuat data pesanan.</td>
           </tr>
         `;
       }
@@ -553,8 +570,9 @@
   }
 
   // =========================================
-  // MENAMPILKAN DATA PESANAN
+  // MENAMPILKAN PESANAN
   // =========================================
+
   function renderOrders() {
     const tbody = $("#ordersBody");
     const emptyState = $("#emptyOrders");
@@ -566,7 +584,7 @@
     ).toLowerCase().trim();
 
     const filterValue =
-      $("#statusFilter")?.value || "Semua";
+      $("#filterStatus")?.value || "";
 
     const filteredOrders = cachedOrders.filter(order => {
       const searchableText = [
@@ -578,11 +596,7 @@
 
       return (
         searchableText.includes(searchValue) &&
-        (
-          filterValue === "Semua" ||
-          !filterValue ||
-          order.status === filterValue
-        )
+        (!filterValue || order.status === filterValue)
       );
     });
 
@@ -593,10 +607,9 @@
     if (!filteredOrders.length) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="6">Belum ada pesanan yang sesuai.</td>
+          <td colspan="5">Belum ada pesanan yang sesuai.</td>
         </tr>
       `;
-
       return;
     }
 
@@ -607,15 +620,23 @@
 
       return `
         <tr>
-          <td>${escapeHTML(order.name || "-")}</td>
-          <td>${escapeHTML(order.school || "-")}</td>
-          <td>${escapeHTML(order.package_name || "-").replace(/\n/g, "<br>")}</td>
+          <td>
+            <strong>${escapeHTML(order.name || "-")}</strong>
+            <small>${escapeHTML(order.school || "-")}</small>
+          </td>
+
+          <td>
+            ${escapeHTML(order.package_name || "-").replace(/\n/g, "<br>")}
+          </td>
+
+          <td>${escapeHTML(formatDate(order.created_at))}</td>
+
           <td>
             <span class="status-badge status-${statusClass}">
               ${escapeHTML(order.status || "Baru")}
             </span>
           </td>
-          <td>${escapeHTML(formatDate(order.created_at))}</td>
+
           <td>
             <button
               type="button"
@@ -637,11 +658,12 @@
   }
 
   $("#searchOrders")?.addEventListener("input", renderOrders);
-  $("#statusFilter")?.addEventListener("change", renderOrders);
+  $("#filterStatus")?.addEventListener("change", renderOrders);
 
   // =========================================
   // DETAIL PESANAN
   // =========================================
+
   function showOrderDetail(id) {
     const order = cachedOrders.find(
       item => String(item.id) === String(id)
@@ -654,10 +676,7 @@
 
     activeOrderId = order.id;
 
-    setText(
-      "#detailName",
-      order.name || "Detail Pesanan"
-    );
+    setText("#detailName", order.name || "Detail Pesanan");
 
     const content = $("#detailContent");
 
@@ -689,11 +708,6 @@
         </div>
 
         <div class="detail-item">
-          <strong>Nomor WhatsApp</strong>
-          <span>Tidak dikumpulkan melalui formulir</span>
-        </div>
-
-        <div class="detail-item">
           <strong>Tanggal pesanan</strong>
           <span>${escapeHTML(formatDate(order.created_at))}</span>
         </div>
@@ -715,8 +729,9 @@
   });
 
   // =========================================
-  // UPDATE STATUS PESANAN
+  // UPDATE STATUS
   // =========================================
+
   const saveStatusButton = $("#saveStatus");
 
   if (saveStatusButton) {
@@ -729,7 +744,7 @@
       const newStatus = $("#detailStatus")?.value;
 
       if (!newStatus) {
-        toast("Pilih status pesanan terlebih dahulu.", "error");
+        toast("Pilih status terlebih dahulu.", "error");
         return;
       }
 
@@ -753,10 +768,7 @@
       } catch (error) {
         console.error("Gagal memperbarui status:", error);
 
-        toast(
-          "Gagal memperbarui status pesanan.",
-          "error"
-        );
+        toast("Gagal memperbarui status pesanan.", "error");
 
       } finally {
         saveStatusButton.disabled = false;
@@ -765,8 +777,9 @@
   }
 
   // =========================================
-  // EXPORT DATA CSV
+  // EXPORT CSV
   // =========================================
+
   const exportButton = $("#exportCsv");
 
   if (exportButton) {
@@ -790,4 +803,41 @@
         order.name,
         order.school,
         order.major,
-        order
+        order.package_name,
+        order.notes,
+        order.status,
+        formatDate(order.created_at)
+      ]);
+
+      const escapeCSV = value =>
+        `"${String(value ?? "").replace(/"/g, '""')}"`;
+
+      const csv = [
+        headers.map(escapeCSV).join(","),
+        ...rows.map(row => row.map(escapeCSV).join(","))
+      ].join("\r\n");
+
+      const blob = new Blob(
+        ["\uFEFF" + csv],
+        { type: "text/csv;charset=utf-8;" }
+      );
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = `reportify-pesanan-${new Date()
+        .toISOString()
+        .slice(0, 10)}.csv`;
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+
+      toast("Data pesanan berhasil diekspor!");
+    });
+  }
+
+})();
