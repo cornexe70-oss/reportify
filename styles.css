@@ -2064,3 +2064,117 @@ td small {
     transition: none;
   }
 }
+
+
+/* =========================================
+   REPORTIFY — PENYEMPURNAAN TAMPILAN
+   ========================================= */
+
+/* Blur latar belakang saat modal terbuka */
+.modal-backdrop {
+  background: rgba(25, 17, 40, 0.58);
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+}
+
+/* Formulir lebih ringkas */
+.modal {
+  width: min(520px, 100%);
+  max-height: 92vh;
+  max-height: 92dvh;
+  padding: 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal .form-grid {
+  gap: 10px;
+}
+
+.modal input,
+.modal select,
+.modal textarea {
+  min-height: 36px;
+  padding: 9px 11px;
+  font-size: 13px;
+}
+
+.modal textarea {
+  min-height: 55px;
+  height: 55px;
+  resize: vertical;
+}
+
+.modal .service-options {
+  gap: 7px;
+}
+
+.modal .service-options label {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+/* Tombol formulir */
+.modal button[type="submit"] {
+  min-height: 42px;
+}
+
+/* Warna label paket */
+.price-card:nth-child(1) .plan-label {
+  color: #596273;
+  background: #edf0f4;
+  border-color: #dce1e8;
+}
+
+.price-card:nth-child(2) .plan-label {
+  color: #16804a;
+  background: #e6f7ed;
+  border-color: #c6ebd3;
+}
+
+.price-card:nth-child(3) .plan-label {
+  color: #7048d8;
+  background: #f0eaff;
+  border-color: #ded1ff;
+}
+
+.price-card:nth-child(4) .plan-label {
+  color: #9a6800;
+  background: #fff4d8;
+  border-color: #f2dfaa;
+}
+
+/* Tampilan HP */
+@media (max-width: 600px) {
+  .modal-backdrop {
+    align-items: center;
+    padding: 8px;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 90vh;
+    max-height: 90dvh;
+    padding: 16px 14px;
+    border-radius: 18px;
+  }
+
+  .modal .form-grid {
+    gap: 8px;
+  }
+
+  .modal .service-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .modal .service-options label {
+    padding: 7px;
+    font-size: 11px;
+  }
+
+  .modal textarea {
+    min-height: 48px;
+    height: 48px;
+  }
+}
