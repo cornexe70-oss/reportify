@@ -77,9 +77,7 @@ img {
   max-width: 100%;
 }
 
-/* =========================================
-   CONTAINER
-========================================= */
+/* CONTAINER */
 
 .section-wrap {
   width: min(1160px, calc(100% - 40px));
@@ -90,9 +88,7 @@ img {
   padding-block: 65px;
 }
 
-/* =========================================
-   ANNOUNCEMENT
-========================================= */
+/* ANNOUNCEMENT */
 
 .announcement {
   width: 100%;
@@ -105,9 +101,7 @@ img {
   letter-spacing: .4px;
 }
 
-/* =========================================
-   HEADER
-========================================= */
+/* HEADER */
 
 .site-header {
   position: sticky;
@@ -191,9 +185,7 @@ img {
   font-size: 20px;
 }
 
-/* =========================================
-   BUTTONS
-========================================= */
+/* BUTTONS */
 
 .btn {
   display: inline-flex;
@@ -253,9 +245,7 @@ img {
   width: 100%;
 }
 
-/* =========================================
-   HERO
-========================================= */
+/* HERO */
 
 .hero {
   position: relative;
@@ -446,9 +436,7 @@ img {
   letter-spacing: .8px;
 }
 
-/* =========================================
-   TRUST STRIP
-========================================= */
+/* TRUST STRIP */
 
 .trust-strip {
   display: grid;
@@ -477,9 +465,7 @@ img {
   font-weight: 700;
 }
 
-/* =========================================
-   SECTION HEADING
-========================================= */
+/* SECTION HEADING */
 
 .section-heading {
   display: flex;
@@ -503,9 +489,7 @@ img {
   line-height: 1.8;
 }
 
-/* =========================================
-   PRICING
-========================================= */
+/* PRICING */
 
 .pricing-section {
   width: 100%;
@@ -588,9 +572,7 @@ img {
   line-height: 1.7;
 }
 
-/* =========================================
-   SERVICES
-========================================= */
+/* SERVICES */
 
 .service-grid {
   display: grid;
@@ -637,9 +619,7 @@ img {
   line-height: 1.75;
 }
 
-/* =========================================
-   WORKFLOW
-========================================= */
+/* WORKFLOW */
 
 .workflow {
   padding-block: 65px;
@@ -689,9 +669,7 @@ img {
   line-height: 1.75;
 }
 
-/* =========================================
-   FAQ
-========================================= */
+/* FAQ */
 
 .faq-section {
   width: 100%;
@@ -729,9 +707,7 @@ img {
   line-height: 1.8;
 }
 
-/* =========================================
-   CTA
-========================================= */
+/* CTA */
 
 .cta-section {
   padding-block: 55px;
@@ -740,267 +716,11 @@ img {
 .cta-box {
   position: relative;
   overflow: hidden;
-  padding: 48px 28px;
+  padding: 55px;
   border-radius: 25px;
   background: var(--purple-dark);
   color: white;
-  text-align: center;
-}
-
-.eyebrow.light {
-  color: #c6afff;
-}
-
-.cta-box h2 {
-  position: relative;
-  margin: 13px 0;
-  font-family: "Manrope", sans-serif;
-  font-size: clamp(26px, 4vw, 39px);
-  line-height: 1.25;
-}
-
-.cta-box h2 span {
-  color: #c6afff;
-}
-
-.cta-box p,
-.cta-box small {
-  position: relative;
-  color: #d0c8df;
-  font-size: 11px;
-}
-
-.cta-box .btn {
-  position: relative;
-  margin: 15px 0 9px;
-}
-
-.cta-box small {
-  display: block;
-}
-
-.cta-orb {
-  position: absolute;
-  top: -150px;
-  right: -80px;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  background: rgba(112,72,216,.22);
-}
-
-/* =========================================
-   FOOTER
-========================================= */
-
-.footer {
-  width: 100%;
-  padding: 38px 0 22px;
-  background: #191329;
-  color: white;
-}
-
-.footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 22px;
-}
-
-.brand-footer .brand-dot {
-  color: #b99bff;
-}
-
-.brand-footer small {
-  color: #aaa1bb;
-}
-
-.footer-links {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 18px;
-}
-
-.footer-links a,
-.footer-links button {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #d5cede;
-  font-size: 11px;
-  cursor: pointer;
-}
-
-.footer-links a:hover,
-.footer-links button:hover {
-  color: white;
-}
-
-.footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  padding-top: 17px;
-  border-top: 1px solid #393146;
-  color: #a9a1b7;
-  font-size: 9px;
-}
-
-/* =========================================
-   MODALS
-========================================= */
-
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  overflow-y: auto;
-  background: rgba(25,17,40,.68);
-}
-
-.modal-backdrop.show {
-  display: flex;
-}
-
-.modal {
-  position: relative;
-  width: min(540px, 100%);
-  max-height: 94vh;
-  padding: 25px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  border: 1px solid rgba(255,255,255,.5);
-  border-radius: 20px;
-  background: white;
-  box-shadow: 0 20px 60px rgba(20,10,40,.2);
-}
-
-.modal-close {
-  position: absolute;
-  top: 11px;
-  right: 12px;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 0;
-  border-radius: 10px;
-  background: var(--lav2);
-  color: var(--ink);
-  font-size: 23px;
-}
-
-.modal h2 {
-  margin: 7px 0;
-  font-family: "Manrope", sans-serif;
-  font-size: 25px;
-  line-height: 1.2;
-}
-
-.modal-intro {
-  margin: 7px 0 15px;
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 12px;
-}
-
-.form-grid label {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  color: #4c4657;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.form-grid .full {
-  grid-column: 1 / -1;
-}
-
-.form-grid input,
-.form-grid select,
-.form-grid textarea,
-.table-controls input,
-.table-controls select,
-.detail-status-label select {
-  width: 100%;
-  min-height: 38px;
-  padding: 8px 11px;
-  border: 1px solid #ded8e8;
-  border-radius: 9px;
-  background: white;
-  color: var(--ink);
-  font-size: 12px;
-}
-
-.form-grid textarea {
-  min-height: 65px;
-  height: 65px;
-  resize: vertical;
-}
-
-.form-grid h3 {
-  margin: 0;
-  font-size: 12px;
-}
-
-.form-grid .plan-desc {
-  margin: 0;
-  font-size: 10px;
-  line-height: 1.45;
-}
-
-.service-options {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 7px;
-  margin-top: 8px;
-}
-
-.service-options label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 7px;
-  min-width: 0;
-  padding: 8px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--lav2);
-  font-size: 10px;
-  line-height: 1.3;
-}
-
-.service-options input,
-.consent input {
-  width: 15px;
-  height: 15px;
-  flex: 0 0 15px;
-  margin: 0;
-  accent-color: var(--purple);
-}
-
-.consent {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 12px 0;
-  color: var(--muted);
-  font-size: 10px;
-}
+   }
 
 .form-message {
   min-height: 16px;
@@ -1433,7 +1153,6 @@ td small {
     padding-block: 46px;
   }
 
-  /* HEADER DAN HAMBURGER */
   .site-header {
     min-height: 64px;
     padding: 10px 16px;
@@ -1494,7 +1213,6 @@ td small {
     margin-top: 6px;
   }
 
-  /* HERO */
   .hero {
     grid-template-columns: minmax(0, 1fr);
     gap: 25px;
@@ -1520,7 +1238,6 @@ td small {
     padding: 3px 0 10px;
   }
 
-  /* ILUSTRASI KERTAS TETAP ADA */
   .hero-simple-card {
     width: min(100%, 390px);
     min-height: 285px;
@@ -1532,7 +1249,6 @@ td small {
     font-size: 8px;
   }
 
-  /* TRUST STRIP */
   .trust-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 15px 12px;
@@ -1547,7 +1263,6 @@ td small {
     font-size: 10px;
   }
 
-  /* JUDUL BAGIAN */
   .section-heading {
     align-items: flex-start;
     flex-direction: column;
@@ -1565,7 +1280,6 @@ td small {
     font-size: 11px;
   }
 
-  /* PAKET HARGA */
   .pricing-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 11px;
@@ -1595,7 +1309,6 @@ td small {
     font-size: 10px;
   }
 
-  /* LAYANAN DAN LANGKAH */
   .service-grid,
   .steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1622,7 +1335,6 @@ td small {
     border-radius: 15px;
   }
 
-  /* FAQ */
   .faq-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 22px;
@@ -1632,7 +1344,6 @@ td small {
     font-size: 12px;
   }
 
-  /* CTA DAN FOOTER */
   .cta-section {
     padding-block: 38px;
   }
@@ -1656,7 +1367,6 @@ td small {
     flex-direction: column;
   }
 
-  /* FORMULIR */
   .modal-backdrop {
     align-items: flex-end;
     padding: 8px;
@@ -1686,7 +1396,6 @@ td small {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* DASHBOARD ADMIN */
   .admin-shell {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1835,170 +1544,6 @@ td small {
   }
 }
 
-/* AKSESIBILITAS */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-   }
-   
-/* =====================================
-   REPORTIFY — VISUAL POLISH
-===================================== */
-
-/* KARTU PAKET */
-.price-card {
-  position: relative;
-  padding-top: 48px;
-  border-radius: 19px;
-  box-shadow: 0 5px 18px rgba(40, 25, 75, .035);
-}
-
-.price-card::before {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  padding: 5px 10px;
-  border-radius: 30px;
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: .5px;
-}
-
-.price-card:nth-child(1)::before {
-  content: "MULAI DI SINI";
-  background: #f0eaff;
-  color: #7048d8;
-}
-
-.price-card:nth-child(2)::before {
-  content: "LEBIH LENGKAP";
-  background: #e9f1ff;
-  color: #4168b2;
-}
-
-.price-card:nth-child(3)::before {
-  content: "★ PALING FAVORIT";
-  background: #7048d8;
-  color: white;
-}
-
-.price-card:nth-child(4)::before {
-  content: "PALING HEMAT";
-  background: #e3f6eb;
-  color: #218653;
-}
-
-/* PAKET FAVORIT */
-.price-card:nth-child(3) {
-  border: 2px solid #a88ae9;
-  box-shadow: 0 12px 30px rgba(112, 72, 216, .12);
-  transform: translateY(-4px);
-}
-
-.price-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 32px rgba(55, 35, 90, .10);
-}
-
-/* TEKS PAKET */
-.plan-label {
-  display: inline-block;
-  margin-bottom: 3px;
-  font-size: 9px;
-  letter-spacing: 1.1px;
-}
-
-.price-card h3 {
-  font-size: 20px;
-  letter-spacing: -.4px;
-}
-
-.price {
-  margin-top: 15px;
-  font-size: 27px;
-  letter-spacing: -1px;
-}
-
-.price-card ul {
-  line-height: 1.7;
-}
-
-.price-card .btn {
-  min-height: 43px;
-  border-radius: 11px;
-}
-
-/* =====================================
-   IKON KERTAS REPORTIFY
-===================================== */
-
-.hero-simple-icon {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 65px;
-  height: 65px;
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 19px;
-  background: linear-gradient(145deg, #8965ed, #5834bd);
-  box-shadow: 0 10px 24px rgba(112,72,216,.25);
-  font-size: 0;
-}
-
-/* Bentuk lembar dokumen */
-.hero-simple-icon::before {
-  content: "";
-  position: absolute;
-  width: 27px;
-  height: 35px;
-  border: 2px solid white;
-  border-radius: 4px;
-  background: linear-gradient(
-    135deg,
-    white 0 79%,
-    #d8caff 80% 100%
-  );
-  clip-path: polygon(
-    0 0,
-    72% 0,
-    100% 25%,
-    100% 100%,
-    0 100%
-  );
-  box-shadow: 0 3px 8px rgba(0,0,0,.12);
-}
-
-/* Garis tulisan pada dokumen */
-.hero-simple-icon::after {
-  content: "";
-  position: absolute;
-  width: 15px;
-  height: 12px;
-  margin-top: 7px;
-  background: repeating-linear-gradient(
-    to bottom,
-    #8965ed 0,
-    #8965ed 2px,
-    transparent 2px,
-    transparent 5px
-  );
-}
-
-/* KARTU ILUSTRASI */
-.hero-simple-card {
-  border: 1px solid #e3d8fa;
-  background:
-    radial-gradient(circle at 90% 10%, #eee5ff 0, transparent 38%),
-    linear-gradient(145deg, #fff, #f7f3ff);
-  box-shadow: 0 22px 55px rgba(55,35,90,.10);
-}
-
 .hero-simple-check {
   box-shadow: 0 5px 15px rgba(33,134,83,.13);
 }
@@ -2065,19 +1610,16 @@ td small {
   }
 }
 
-
 /* =========================================
    REPORTIFY — PENYEMPURNAAN TAMPILAN
-   ========================================= */
+========================================= */
 
-/* Blur latar belakang saat modal terbuka */
 .modal-backdrop {
   background: rgba(25, 17, 40, 0.58);
   -webkit-backdrop-filter: blur(9px);
   backdrop-filter: blur(9px);
 }
 
-/* Formulir lebih ringkas */
 .modal {
   width: min(520px, 100%);
   max-height: 92vh;
@@ -2114,7 +1656,6 @@ td small {
   font-size: 12px;
 }
 
-/* Tombol formulir */
 .modal button[type="submit"] {
   min-height: 42px;
 }
@@ -2144,7 +1685,6 @@ td small {
   border-color: #f2dfaa;
 }
 
-/* Tampilan HP */
 @media (max-width: 600px) {
   .modal-backdrop {
     align-items: center;
@@ -2178,3 +1718,334 @@ td small {
     height: 48px;
   }
 }
+
+/* =========================================
+   REPORTIFY — FORM KONSULTASI BARU
+========================================= */
+
+#orderModal {
+  padding: 14px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+#orderModal .modal {
+  width: min(620px, 100%);
+  max-height: min(92vh, 900px);
+  max-height: min(92dvh, 900px);
+  padding: 30px;
+  border: 1px solid #e8e0f6;
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(232,222,255,.55), transparent 30%),
+    #fff;
+  box-shadow: 0 28px 90px rgba(25,17,40,.25);
+}
+
+#orderModal .form-brand-icon {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  margin-bottom: 15px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #8965ed, #5834bd);
+  color: #fff;
+  font-size: 23px;
+  box-shadow: 0 8px 18px rgba(112,72,216,.22);
+}
+
+#orderModal .eyebrow {
+  letter-spacing: 1.7px;
+}
+
+#orderModal h2 {
+  margin: 7px 38px 8px 0;
+  font-size: clamp(24px, 5vw, 30px);
+  letter-spacing: -.8px;
+}
+
+#orderModal .modal-intro {
+  max-width: 490px;
+  margin: 0 0 17px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+#orderModal .form-progress {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 22px;
+  padding: 11px 13px;
+  border: 1px solid #eee8f8;
+  border-radius: 13px;
+  background: #faf8ff;
+  color: #777184;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+#orderModal .form-progress span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+#orderModal .form-progress b {
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 7px;
+  background: #eee7ff;
+  color: #7048d8;
+  font-size: 9px;
+}
+
+#orderModal .form-progress i {
+  height: 1px;
+  min-width: 10px;
+  flex: 1;
+  background: #e4dced;
+}
+
+#orderModal .form-grid {
+  gap: 14px 12px;
+}
+
+#orderModal .form-grid > label,
+#orderModal .form-grid > .full.form-field {
+  color: #393247;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+#orderModal .form-grid label em,
+#orderModal .form-grid label > small {
+  margin-left: 5px;
+  color: #9991a5;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+#orderModal .form-grid label em {
+  color: #9a6a22;
+}
+
+#orderModal .form-grid input:not([type="checkbox"]),
+#orderModal .form-grid select,
+#orderModal .form-grid textarea {
+  min-height: 44px;
+  margin-top: 2px;
+  padding: 11px 13px;
+  border: 1px solid #e3ddec;
+  border-radius: 11px;
+  background: rgba(255,255,255,.92);
+  color: #282235;
+  font-size: 12px;
+  font-weight: 500;
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+#orderModal .form-grid input:focus,
+#orderModal .form-grid select:focus,
+#orderModal .form-grid textarea:focus {
+  border-color: #9675e6;
+  outline: 0;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(112,72,216,.11);
+}
+
+#orderModal .form-grid input::placeholder,
+#orderModal .form-grid textarea::placeholder {
+  color: #aaa4b2;
+  font-weight: 400;
+}
+
+#orderModal .form-choice-section {
+  padding: 15px;
+  border: 1px solid #eee8f7;
+  border-radius: 15px;
+  background: #fcfbff;
+}
+
+#orderModal .form-section-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+#orderModal .form-section-title > span {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  border-radius: 9px;
+  background: #eee7ff;
+  color: #7048d8;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+#orderModal .form-section-title h3 {
+  margin: 1px 0 3px;
+  color: #30283d;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+#orderModal .form-section-title .plan-desc {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+#orderModal #planSelect {
+  width: 100%;
+  min-height: 45px;
+  margin-top: 0;
+  border-color: #ded4ef;
+  background-color: #fff;
+  font-weight: 700;
+}
+
+#orderModal .service-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 0;
+}
+
+#orderModal .service-options label {
+  min-height: 43px;
+  padding: 10px;
+  border: 1px solid #e8e1f0;
+  border-radius: 10px;
+  background: #fff;
+  color: #514a5e;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: border-color .18s ease, background .18s ease;
+}
+
+#orderModal .service-options label:has(input:checked) {
+  border-color: #a88ae9;
+  background: #f3eeff;
+  color: #5936b5;
+}
+
+#orderModal .service-options input,
+#orderModal .consent input {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  accent-color: #7048d8;
+}
+
+#orderModal .notes-field > small {
+  display: block;
+  margin: 2px 0 5px;
+  color: #8b8495;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+#orderModal .form-grid textarea {
+  min-height: 105px;
+  height: 105px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+#orderModal .consent {
+  align-items: flex-start;
+  margin: 16px 0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+#orderModal .consent input {
+  margin-top: 1px;
+}
+
+#orderModal button[type="submit"] {
+  min-height: 48px;
+  border-radius: 12px;
+  font-size: 12px;
+  box-shadow: 0 8px 18px rgba(112,72,216,.2);
+}
+
+#orderModal .form-message {
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  #orderModal {
+    align-items: flex-end;
+    padding: 8px;
+  }
+
+  #orderModal .modal {
+    width: 100%;
+    max-height: 94vh;
+    max-height: 94dvh;
+    padding: 23px 17px 18px;
+    border-radius: 22px 22px 17px 17px;
+  }
+
+  #orderModal .form-progress {
+    gap: 6px;
+    padding: 9px;
+    font-size: 9px;
+  }
+
+  #orderModal .form-progress span {
+    gap: 4px;
+  }
+
+  #orderModal .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  #orderModal .form-grid > label,
+  #orderModal .form-grid > .full {
+    grid-column: 1 / -1;
+  }
+
+  #orderModal .form-choice-section {
+    padding: 12px;
+  }
+
+  #orderModal .service-options {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  #orderModal .service-options label {
+    min-height: 42px;
+    padding: 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  #orderModal .form-progress {
+    font-size: 8px;
+  }
+
+  #orderModal .form-progress b {
+    width: 19px;
+    height: 19px;
+  }
+
+  #orderModal .service-options {
+    grid-template-columns: 1fr;
+  }
+     }
