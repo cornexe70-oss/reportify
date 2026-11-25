@@ -588,7 +588,7 @@
 
     const filteredOrders = cachedOrders.filter(order => {
       const searchableText = [
-        order.name,
+        order.customer_name,
         order.school,
         order.major,
         order.package_name
