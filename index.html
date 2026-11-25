@@ -129,33 +129,33 @@
         <button class="btn btn-outline btn-full" data-plan="BASIC">Pilih Paket ↗</button>
       </article>
 
-<article class="price-card">
-  <span class="plan-label">03 / FAVORIT</span>
-  <h3>FAVORIT</h3>
-  <p class="plan-desc">Pilihan paling populer untuk laporan yang lebih lengkap.</p>
-  <div class="price">Rp45.000</div>
-  <p class="plan-desc"><strong>Maksimal 25 halaman</strong></p>
-  <ul>
-    <li>✓ Perapian dokumen</li>
-    <li>✓ Editing bahasa</li>
-    <li>✓ Pemeriksaan konsistensi format</li>
-  </ul>
-  <button class="btn btn-outline btn-full" data-plan="FAVORIT">Pilih Paket ↗</button>
-</article>
-      
-<article class="price-card">
-  <span class="plan-label">04 / PRO</span>
-  <h3>PRO</h3>
-  <p class="plan-desc">Paket kapasitas terbesar dengan harga per halaman paling hemat.</p>
-  <div class="price">Rp51.000</div>
-  <p class="plan-desc"><strong>Maksimal 30 halaman</strong></p>
-  <ul>
-    <li>✓ Perapian dokumen</li>
-    <li>✓ Editing bahasa</li>
-    <li>✓ Pemeriksaan format menyeluruh</li>
-  </ul>
-  <button class="btn btn-outline btn-full" data-plan="PRO">Pilih Paket ↗</button>
-  </article>
+      <article class="price-card">
+        <span class="plan-label">03 / FAVORIT</span>
+        <h3>FAVORIT</h3>
+        <p class="plan-desc">Pilihan paling populer untuk laporan yang lebih lengkap.</p>
+        <div class="price">Rp45.000</div>
+        <p class="plan-desc"><strong>Maksimal 25 halaman</strong></p>
+        <ul>
+          <li>✓ Perapian dokumen</li>
+          <li>✓ Editing bahasa</li>
+          <li>✓ Pemeriksaan konsistensi format</li>
+        </ul>
+        <button class="btn btn-outline btn-full" data-plan="FAVORIT">Pilih Paket ↗</button>
+      </article>
+
+      <article class="price-card">
+        <span class="plan-label">04 / PRO</span>
+        <h3>PRO</h3>
+        <p class="plan-desc">Paket kapasitas terbesar dengan harga per halaman paling hemat.</p>
+        <div class="price">Rp51.000</div>
+        <p class="plan-desc"><strong>Maksimal 30 halaman</strong></p>
+        <ul>
+          <li>✓ Perapian dokumen</li>
+          <li>✓ Editing bahasa</li>
+          <li>✓ Pemeriksaan format menyeluruh</li>
+        </ul>
+        <button class="btn btn-outline btn-full" data-plan="PRO">Pilih Paket ↗</button>
+      </article>
 
     </div>
 
@@ -163,9 +163,9 @@
       *Harga paket mengikuti batas halaman masing-masing. Kebutuhan di luar cakupan paket akan dibahas langsung melalui WhatsApp sebelum disepakati.
     </p>
   </div>
-</section>
+  </section>
 
-<section class="pricing-section" id="layanan-tambahan">
+  <section class="pricing-section" id="layanan-tambahan">
   <div class="section-wrap section-pad">
     <div class="section-heading">
       <div>
@@ -304,47 +304,57 @@
       <span>Jujur dalam isi. Rapi dalam penyajian.</span>
     </div>
   </div>
-</footer>
+  </footer>
 
-<!-- MODAL PESANAN -->
+  <!-- MODAL PESANAN -->
 <div class="modal-backdrop" id="orderModal" aria-hidden="true">
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
     <button class="modal-close" type="button" data-close-order>×</button>
+
     <div class="eyebrow">FORM KONSULTASI</div>
     <h2 id="orderTitle">Ceritakan laporanmu.</h2>
-    <p class="modal-intro">Isi informasi berikut. Setelah mengirim permintaan, kamu akan diarahkan ke WhatsApp REPORTIFY.</p>
+    <p class="modal-intro">
+      Isi informasi berikut. Setelah mengirim permintaan, kamu akan diarahkan ke WhatsApp REPORTIFY.
+    </p>
 
     <form id="orderForm">
       <div class="form-grid">
 
-        <label>Nama lengkap
-          <input name="name" required placeholder="Nama kamu">
+        <label class="form-field">
+          Nama lengkap <em>Wajib</em>
+          <input name="name" required autocomplete="name" placeholder="Masukkan nama lengkapmu">
         </label>
 
-        <label>Nama sekolah
-          <input name="school" required placeholder="SMK ...">
+        <label class="form-field">
+          Asal sekolah <em>Wajib</em>
+          <input name="school" required placeholder="Contoh: SMK Negeri 1 ...">
         </label>
 
-        <label class="full">Jurusan
-          <input name="major" placeholder="Contoh: TKJ, AKL, DKV">
+        <label class="full form-field">
+          Jurusan / Program keahlian <small>Opsional</small>
+          <input name="major" placeholder="Contoh: TKJ, AKL, DKV, MPLB">
         </label>
 
         <div class="full">
           <h3>Pilih Paket Utama</h3>
-          <p class="plan-desc">Opsional. Kamu boleh melewati pilihan ini jika hanya membutuhkan layanan tambahan.</p>
-          
-        <select name="plan" id="planSelect">
-        <option value="Tidak memilih paket utama">Tidak memilih paket utama</option>
-        <option value="STARTER — 15 halaman — Rp30.000">STARTER — 15 halaman — Rp30.000</option>
-        <option value="BASIC — 20 halaman — Rp38.000">BASIC — 20 halaman — Rp38.000</option>
-        <option value="FAVORIT — 25 halaman — Rp45.000">FAVORIT — 25 halaman — Rp45.000</option>
-        <option value="PRO — 30 halaman — Rp51.000">PRO — 30 halaman — Rp51.000</option>
-       </select>
-     </div>
+          <p class="plan-desc">
+            Opsional. Kamu boleh melewati pilihan ini jika hanya membutuhkan layanan tambahan.
+          </p>
+
+          <select name="plan" id="planSelect">
+            <option value="Tidak memilih paket utama">Tidak memilih paket utama</option>
+            <option value="STARTER — 15 halaman — Rp30.000">STARTER — 15 halaman — Rp30.000</option>
+            <option value="BASIC — 20 halaman — Rp38.000">BASIC — 20 halaman — Rp38.000</option>
+            <option value="FAVORIT — 25 halaman — Rp45.000">FAVORIT — 25 halaman — Rp45.000</option>
+            <option value="PRO — 30 halaman — Rp51.000">PRO — 30 halaman — Rp51.000</option>
+          </select>
+        </div>
 
         <div class="full">
           <h3>Layanan Tambahan</h3>
-          <p class="plan-desc">Opsional. Pilih satu atau beberapa layanan yang kamu butuhkan.</p>
+          <p class="plan-desc">
+            Opsional. Pilih satu atau beberapa layanan yang kamu butuhkan.
+          </p>
 
           <div class="service-options">
             <label><input type="checkbox" name="services" value="Revisi laporan"> Revisi laporan</label>
@@ -356,19 +366,23 @@
           </div>
         </div>
 
-        <label class="full">Kebutuhan / progres laporan
-          <textarea name="notes" rows="4" required placeholder="Ceritakan kebutuhanmu, kondisi laporan, atau hal yang ingin ditanyakan..."></textarea>
+        <label class="full form-field notes-field">
+          Ceritakan kebutuhanmu <em>Wajib</em>
+          <small>
+            Jelaskan progres laporan, bagian yang ingin dibantu, atau kendala yang sedang dihadapi.
+          </small>
+          <textarea name="notes" rows="4" required placeholder="Contoh: Saya sudah menyelesaikan BAB 1–2 dan membutuhkan bantuan merapikan format serta bahasa laporan..."></textarea>
         </label>
 
       </div>
 
       <label class="consent">
         <input type="checkbox" required>
-        Saya memastikan informasi yang diberikan benar.
+        Saya memastikan informasi yang saya berikan sudah benar.
       </label>
 
       <button class="btn btn-primary btn-full" type="submit">
-        Kirim Permintaan ↗
+        Kirim Permintaan Konsultasi ↗
       </button>
 
       <div class="form-message" id="formMessage" role="status"></div>
@@ -380,16 +394,20 @@
 <div class="modal-backdrop" id="loginModal" aria-hidden="true">
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
     <button class="modal-close" id="closeLogin" type="button">×</button>
+
     <div class="eyebrow">AREA ADMIN</div>
     <h2 id="loginTitle">Masuk ke dashboard.</h2>
     <p class="modal-intro">Gunakan email dan password admin.</p>
 
     <form id="loginForm">
       <div class="form-grid">
-        <label class="full">Email admin
+        <label class="full">
+          Email admin
           <input name="email" type="email" required autocomplete="username" placeholder="admin@email.com">
         </label>
-        <label class="full">Password
+
+        <label class="full">
+          Password
           <input name="password" type="password" required autocomplete="current-password" placeholder="Password admin">
         </label>
       </div>
@@ -403,6 +421,7 @@
 <!-- DASHBOARD ADMIN -->
 <div class="admin-backdrop" id="adminPanel" aria-hidden="true">
   <section class="admin-shell">
+
     <aside class="admin-sidebar">
       <a class="brand brand-admin" href="#">
         <span class="brand-mark">R</span>
@@ -417,7 +436,10 @@
 
       <div class="admin-side-bottom">
         <span class="admin-avatar">A</span>
-        <span><b>Admin REPORTIFY</b><small>Supabase Workspace</small></span>
+        <span>
+          <b>Admin REPORTIFY</b>
+          <small>Supabase Workspace</small>
+        </span>
       </div>
     </aside>
 
@@ -433,10 +455,29 @@
 
       <div class="admin-content" id="adminOverview">
         <div class="stats-grid">
-          <div class="stat-card"><span>Total pesanan</span><b id="statTotal">0</b><small>Semua permintaan</small></div>
-          <div class="stat-card"><span>Pesanan baru</span><b id="statNew">0</b><small>Menunggu ditinjau</small></div>
-          <div class="stat-card"><span>Diproses</span><b id="statProgress">0</b><small>Sedang dikerjakan</small></div>
-          <div class="stat-card"><span>Selesai</span><b id="statDone">0</b><small>Telah dituntaskan</small></div>
+          <div class="stat-card">
+            <span>Total pesanan</span>
+            <b id="statTotal">0</b>
+            <small>Semua permintaan</small>
+          </div>
+
+          <div class="stat-card">
+            <span>Pesanan baru</span>
+            <b id="statNew">0</b>
+            <small>Menunggu ditinjau</small>
+          </div>
+
+          <div class="stat-card">
+            <span>Diproses</span>
+            <b id="statProgress">0</b>
+            <small>Sedang dikerjakan</small>
+          </div>
+
+          <div class="stat-card">
+            <span>Selesai</span>
+            <b id="statDone">0</b>
+            <small>Telah dituntaskan</small>
+          </div>
         </div>
 
         <div class="table-card" id="ordersTable">
@@ -450,6 +491,7 @@
 
           <div class="table-controls">
             <input id="searchOrders" placeholder="Cari nama / sekolah..." aria-label="Cari pesanan">
+
             <select id="filterStatus" aria-label="Filter status">
               <option value="">Semua status</option>
               <option>Baru</option>
@@ -477,9 +519,12 @@
           <div class="empty-state" id="emptyOrders">Belum ada pesanan.</div>
         </div>
 
-        <p class="admin-disclaimer">Dashboard menggunakan Supabase untuk mengelola data pesanan. Akses dibatasi untuk akun admin yang terdaftar.</p>
+        <p class="admin-disclaimer">
+          Dashboard menggunakan Supabase untuk mengelola data pesanan. Akses dibatasi untuk akun admin yang terdaftar.
+        </p>
       </div>
     </div>
+
   </section>
 </div>
 
@@ -487,12 +532,14 @@
 <div class="modal-backdrop" id="detailModal" aria-hidden="true">
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="detailName">
     <button class="modal-close" id="closeDetail" type="button">×</button>
+
     <div class="eyebrow">DETAIL PESANAN</div>
     <h2 id="detailName">Pesanan</h2>
 
     <div class="detail-content" id="detailContent"></div>
 
-    <label class="detail-status-label">Status pesanan
+    <label class="detail-status-label">
+      Status pesanan
       <select id="detailStatus">
         <option>Baru</option>
         <option>Diproses</option>
@@ -515,5 +562,4 @@
 <script src="app.js"></script>
 
 </body>
-          </html>
-  
+  </html>
